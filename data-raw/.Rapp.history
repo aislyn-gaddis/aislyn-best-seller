@@ -1,0 +1,2 @@
+load("/Users/aislyngaddis/Documents/rwd/aislyn-bestsellers/data-raw/bestsellers-web-scrape.rds")
+load("/Users/aislyngaddis/Documents/rwd/aislyn-bestsellers/data-raw/bestsellers-combined-web-scrape.rds")
