@@ -276,8 +276,8 @@ $(document).ready(function () {
 <p>In this notebook, I’m going to</p>
 <ul>
 <li>import the Post45 Data Collective’s NYT bestseller data set</li>
-<li>web scrape the NYT hardcover fiction list</li>
-<li>web scrape the NYT combined print and ebook fiction list</li>
+<li>web scrape the NYT Hardcover Fiction List</li>
+<li>web scrape the NYT Combined Print and E-Book Fiction List</li>
 <li>clean the data</li>
 <li>join the two hardcover fiction data sets</li>
 <li>save the data</li>
@@ -285,12 +285,12 @@ $(document).ready(function () {
 <p>I’ll load any libraries I might need.</p>
 <pre class="r"><code>library(readr)
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.4.0      ✔ dplyr   1.0.10
 ## ✔ tibble  3.1.8      ✔ stringr 1.5.0 
 ## ✔ tidyr   1.2.1      ✔ forcats 0.5.2 
 ## ✔ purrr   1.0.1      
-## ── Conflicts ──────────────────────
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(janitor)</code></pre>
@@ -325,7 +325,7 @@ the New York Times Bestsellers list going back to when it started in
 <pre class="r"><code>bestsellers &lt;- read_tsv(&quot;data-raw/nyt_full.tsv&quot;) |&gt; 
   glimpse()</code></pre>
 <pre><code>## Rows: 60386 Columns: 6
-## ── Column specification ───────────
+## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (2): title, author
 ## dbl  (3): year, rank, title_id
@@ -342,8 +342,8 @@ the New York Times Bestsellers list going back to when it started in
 ## $ title    &lt;chr&gt; &quot;THE TEN COMMANDMENTS&quot;, &quot;FINCHE&#39;S FORTUNE&quot;, &quot;THE GOOD EARTH&quot;,…
 ## $ author   &lt;chr&gt; &quot;Warwick Deeping&quot;, &quot;Mazo de la Roche&quot;, &quot;Pearl S. Buck&quot;, &quot;Will…</code></pre>
 </div>
-<div id="hardscover-fiction-web-scrape" class="section level2">
-<h2>Hardscover Fiction Web Scrape</h2>
+<div id="hardcover-fiction-web-scrape" class="section level2">
+<h2>Hardcover Fiction Web Scrape</h2>
 <p>Now, I’m going to get the missing years of the hardcover fiction data
 by web scraping directly from the NYT’s website. You might might need to
 run the code multiple times before it will successfully complete. I also
@@ -388,8 +388,8 @@ bestsellers_two |&gt; glimpse() # glimpsing the data</code></pre>
 ## $ rank   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, …
 ## $ date   &lt;date&gt; 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 20…</code></pre>
 </div>
-<div id="combined-print-and-ebook-web-scrape" class="section level2">
-<h2>Combined Print and Ebook Web Scrape</h2>
+<div id="combined-print-and-e-book-web-scrape" class="section level2">
+<h2>Combined Print and E-book Web Scrape</h2>
 <p>Now I’ll do a similair web scrape to get the combined print and ebook
 list. This is going through over a decade of data, so you may have to
 try running it a few times before it successfully completes. I also
@@ -426,7 +426,7 @@ dfs |&gt; write_rds(&quot;data-raw/bestsellers-combined-web-scrape.rds&quot;)
 bestsellers_combined &lt;- read_rds(&quot;data-raw/bestsellers-combined-web-scrape.rds&quot;) 
 
 bestsellers_combined |&gt; glimpse()</code></pre>
-<pre><code>## Rows: 9,870
+<pre><code>## Rows: 9,975
 ## Columns: 4
 ## $ title  &lt;chr&gt; &quot;TICK TOCK&quot;, &quot;THE GIRL WITH THE DRAGON TATTOO&quot;, &quot;THE GIRL WHO P…
 ## $ author &lt;chr&gt; &quot;by James Patterson and Michael Ledwidge&quot;, &quot;by Stieg Larsson&quot;, …
@@ -480,7 +480,7 @@ dataset.</p>
          title,
          author) |&gt; # putting the columns in the same order as the first dataset
   glimpse() # glimpsing the data</code></pre>
-<pre><code>## Rows: 9,870
+<pre><code>## Rows: 9,975
 ## Columns: 5
 ## $ year   &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 201…
 ## $ week   &lt;date&gt; 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 20…

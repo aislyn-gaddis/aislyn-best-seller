@@ -8,8 +8,8 @@ output:
 In this notebook, I'm going to 
 
 - import the Post45 Data Collective's NYT bestseller data set
-- web scrape the NYT hardcover fiction list
-- web scrape the NYT combined print and ebook fiction list
+- web scrape the NYT Hardcover Fiction List
+- web scrape the NYT Combined Print and E-Book Fiction List
 - clean the data
 - join the two hardcover fiction data sets 
 - save the data
@@ -33,7 +33,7 @@ bestsellers <- read_tsv("data-raw/nyt_full.tsv") |>
   glimpse()
 ```
 
-## Hardscover Fiction Web Scrape
+## Hardcover Fiction Web Scrape
 
 Now, I'm going to get the missing years of the hardcover fiction data by web scraping directly from the NYT's website. You might might need to run the code multiple times before it will successfully complete. I also recommend you comment the code after completion since it takes a bit to run.
 
@@ -75,7 +75,7 @@ bestsellers_two |> write_csv("data-raw/bestsellers-web-scrape.csv") # saving the
 bestsellers_two |> glimpse() # glimpsing the data
 ```
 
-## Combined Print and Ebook Web Scrape
+## Combined Print and E-book Web Scrape
 
 Now I'll do a similair web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. I also recommend commenting it after you finish running it. 
 
