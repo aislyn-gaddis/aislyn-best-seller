@@ -7,17 +7,17 @@ output:
 
 Here's what I'll find in this notebook
 
+- I'll make a searchable table
 - What authors have had the most appearances on the list?
-- What authors have had the most appearances this year? last 2 years? 5 years? 10 years?
+- What author has had the most appearances this year? last 2 years? 5 years? 10 years?
 - What authors have had the most No. 1 appearances? 
-- What authors have had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+- What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
 - What authors have had the most books on the list?
-- What authors have had the most books on the the list this year? last 2 years? 5 years? 10 years?
+- What author has had the most books on the the list this year? last 2 years? 5 years? 10 years?
 - What books have been on the list for the most number of weeks?
 - What books were No. 1 for the most number of weeks?
 - How did movie adaptations affect the charts?
-- Did movie adaptations affect those books' rankings?
-- What author has had the most No. 1 books? 
+- What authors have had the most No. 1 books? 
 - What author has had the most No. 1 books in the last 5 years? 10 years?
 
 ## Setup
@@ -69,7 +69,7 @@ bestsellers_appearances |> # start with the data
   print() # print it
 ```
 
-## What authors have had the most appearances this year? last 2 years? 5 years? 10 years?
+## What author has had the most appearances this year? last 2 years? 5 years? 10 years?
 
 First, I'll find which authors have had the most appearances this year.
 
@@ -125,7 +125,7 @@ bestsellers |> # start with the data
 
 ## What authors have had the most No. 1 appearances?
 
-It's John Grisham with 186.
+John Grisham comes in first with 186. Stephen King takes second with 151. James A. Michener takes third with 132.
 
 ```{r most-one-appearances}
 bestsellers |> # start with the data
@@ -133,10 +133,10 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 65) # only include appearances above 65
+  filter(appearances > 61) # only include appearances above 61
 ```
 
-## What authors have had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+## What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
 
 I'll look at this year first.
 
@@ -194,9 +194,9 @@ bestsellers |> # start with the data
   filter(appearances > 9) # only include appearances above 9
 ```
 
-## What author has had the most books on the list?
+## What authors have had the most books on the list?
 
-It's Danielle Steel with 136.
+Danielle Steel has had the most books on the list with 136. Stuart Woods comes in a far away second with 68. Stephen King comes in third with 57.
 
 ```{r most-books}
 bestsellers |> # start with the data
