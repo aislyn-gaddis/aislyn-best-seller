@@ -1,0 +1,12 @@
+name: "NYT Best Seller Lists Data Analysis"
+navbar:
+  title: "NYT Best Seller Lists Data Analysis"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Import"
+      href: 01-import.html
+    - text: "Hardcover Fiction Analysis"
+      href: 02-analysis.html
+    - text: "Combined Print and Ebook Analysis"
+      href: 03-analysis.html

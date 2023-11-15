@@ -8,9 +8,14 @@ output:
 Here's what I'll find in this notebook
 
 - What authors have had the most appearances on the list?
-- What authors have the highest appearances per book?
+- What authors have had the most appearances this year? last 2 years? 5 years? 10 years?
+- What authors have had the most No. 1 appearances? 
+- What authors have had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+- What authors have had the most books on the list?
+- What authors have had the most books on the the list this year? last 2 years? 5 years? 10 years?
 - What books have been on the list for the most number of weeks?
 - What books were No. 1 for the most number of weeks?
+- How did movie adaptations affect the charts?
 - Did movie adaptations affect those books' rankings?
 - What author has had the most No. 1 books? 
 - What author has had the most No. 1 books in the last 5 years? 10 years?
@@ -44,7 +49,6 @@ bestsellers |>
   datatable()
 ```
 
-
 ## What authors have had the most appearances on the list?
 
 I'll use gsa to find what authors have had the most appearances on the list.
@@ -73,11 +77,11 @@ Bonnie Garmus has had 45, Barbara Kingsolver has had 43, and Gabrielle Zevin has
 
 ```{r most-appearances-this-year}
 bestsellers |> # start with the data
-  filter(year > 2022) |> # only include rows with a year over 2018
+  filter(year > 2022) |> # only include rows with a year over 2022
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 15) # only include appearances above 6
+  filter(appearances > 15) # only include appearances above 15
 ```
 
 I'll look at the past two years.
@@ -86,11 +90,11 @@ It's Bonnie Garmus with 76.
 
 ```{r most-appearances-two-year}
 bestsellers |> # start with the data
-  filter(year > 2021) |> # only include rows with a year over 2018
+  filter(year > 2021) |> # only include rows with a year over 2021
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 25) # only include appearances above 6
+  filter(appearances > 25) # only include appearances above 25
 ```
 
 I'll look at the past five years.
@@ -103,7 +107,7 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 61) # only include appearances above 6
+  filter(appearances > 61) # only include appearances above 61
 ```
 
 I'll look at 10 years.
@@ -112,11 +116,24 @@ It's John Grisham again with 251.
 
 ```{r most-appearances-ten-year}
 bestsellers |> # start with the data
-  filter(year > 2013) |> # only include rows with a year over 2018
+  filter(year > 2013) |> # only include rows with a year over 2013
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 100) # only include appearances above 6
+  filter(appearances > 100) # only include appearances above 100
+```
+
+## What authors have had the most No. 1 appearances?
+
+It's John Grisham with 186.
+
+```{r most-one-appearances}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows with a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 65) # only include appearances above 65
 ```
 
 ## What authors have had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
@@ -128,11 +145,11 @@ It's Bonnie Garmus with 13.
 ```{r most-one-appearances-this-year}
 bestsellers |> # start with the data
   filter(year > 2022,
-         rank == 1) |> # only include rows with a year over 2018
+         rank == 1) |> # only include rows with a year over 2022 and a rank of 1
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 1) # only include appearances above 6
+  filter(appearances > 1) # only include appearances above 1
 ```
 
 Now two years.
@@ -142,11 +159,11 @@ It's Bonnie Garmus with 14.
 ```{r most-one-appearances-two-years}
 bestsellers |> # start with the data
   filter(year > 2021,
-         rank == 1) |> # only include rows with a year over 2018
+         rank == 1) |> # only include rows with a year over 2021 and a rank of 1
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 4) # only include appearances above 6
+  filter(appearances > 4) # only include appearances above 4
 ```
 
 5 years?
@@ -156,11 +173,11 @@ It's Delia Owens with 54.
 ```{r most-one-appearances-five-years}
 bestsellers |> # start with the data
   filter(year > 2018,
-         rank == 1) |> # only include rows with a year over 2018
+         rank == 1) |> # only include rows with a year over 2018 and a rank of 1
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 4) # only include appearances above 6
+  filter(appearances > 4) # only include appearances above 4
 ```
 
 And finally, 10 years?
@@ -170,11 +187,24 @@ It's John Grisham with 57, but Delia Owens comes close with 54.
 ```{r most-one-appearances-ten-years}
 bestsellers |> # start with the data
   filter(year > 2013,
-         rank == 1) |> # only include rows with a year over 2018
+         rank == 1) |> # only include rows with a year over 2013 and a rank of 1
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 9) # only include appearances above 6
+  filter(appearances > 9) # only include appearances above 9
+```
+
+## What author has had the most books on the list?
+
+It's Danielle Steel with 136.
+
+```{r most-books}
+bestsellers |> # start with the data
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 40) # only include titles above 40
 ```
 
 ## What author has had the most books on the list in the last year? 2 years? 5 years? 10 years?
@@ -185,7 +215,7 @@ It's Danielle Steel with 6.
 
 ```{r most-books-this-year}
 bestsellers |> # start with the data
-  filter(year >2022) |> # only include rows with a rank of 1 and a year over 2021
+  filter(year >2022) |> # only include rows with year over 2022
   distinct(author, title) |> # only include unique author/title combinations
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
@@ -197,14 +227,14 @@ I'll look at two years.
 
 It's Danielle Steel with 13.
 
-```{r most-books-two-years}
+```{r most-books-last-two}
 bestsellers |> # start with the data
-  filter(year >2021) |> # only include rows with a rank of 1 and a year over 2021
+  filter(year >2021) |> # only include rows with a year over 2021
   distinct(author, title) |> # only include unique author/title combinations
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 2) # only include titles above 1
+  filter(titles > 2) # only include titles above 2
 ```
 
 I'll look at the last 5 years.
@@ -213,28 +243,27 @@ It's Danielle Steel again with 33.
 
 ```{r most-books-last-five}
 bestsellers |> # start with the data
-  filter(year > 2018) |> # only include rows with a rank of 1 and a year over 2018
+  filter(year > 2018) |> # only include rows with a year over 2018
   distinct(author, title) |> # only include unique author/title combinations
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 7) # only include titles above 3
+  filter(titles > 7) # only include titles above 7
 ```
 
 Now, I'll look at the last 10 years.
 
 It's also Danielle Steel with 59.
 
-```{r most-ones-last-ten}
+```{r most-books-last-ten}
 bestsellers |> # start with the data
-  filter(year > 2013) |> # only include rows with a rank of 1 and a year over 2012
+  filter(year > 2013) |> # only include rows with a year over 2013
   distinct(author, title) |> # only include unique author/title combinations
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 13) # only include titles above 7
+  filter(titles > 13) # only include titles above 13
 ```
-
 
 ## What books have been on the list for the most number of weeks?
 
@@ -274,6 +303,8 @@ bestsellers |> # start with the data
   write_csv("data-processed/most-one-weeks.csv") |> # save the data for data wrapepr
   print() # print it
 ```
+
+## How did movie adaptations affect the charts?
 
 Let's see if the books returned to the charts after the move adaptations came out. 
 
@@ -345,7 +376,7 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 2) # only include titles above 3
+  filter(titles > 2) # only include titles above 2
 ```
 
 Now, I'll look at the last 10 years.
@@ -355,7 +386,7 @@ The results are fairly similar to the last five years. John Grisham is in first 
 ```{r most-one-titles-last-ten}
 bestsellers |> # start with the data
   filter(rank == 1,
-         year > 2013) |> # only include rows with a rank of 1 and a year over 2012
+         year > 2013) |> # only include rows with a rank of 1 and a year over 2013
   distinct(author, title) |> # only include unique author/title combinations
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author

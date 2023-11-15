@@ -1,0 +1,7 @@
+---
+title: "About Me"
+output: html_notebook
+---
+
+Hello! This is a page for my best sellers data analysis. This was first started for my Reporting with Data class project in Spring 2023, but I've been working on it off and on since to improve and expand it. 
+
