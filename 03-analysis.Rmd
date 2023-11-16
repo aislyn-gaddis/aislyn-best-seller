@@ -1,5 +1,5 @@
 ---
-title: "Bestsellers Analysis Part 2"
+title: "Combined Print and E-Book Fiction Analysis"
 output:
   html_document:
     df_print: paged

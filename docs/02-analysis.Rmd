@@ -1,0 +1,177 @@
+---
+title: "Hardcover Fiction Best Sellers Analysis"
+output: html_notebook
+---
+
+Here's what I'll find in this notebook
+
+- What authors have had the most appearances on the list?
+- What authors have the highest appearances to books ratio?
+- What books have been on the list for the most number of weeks?
+- What books were No. 1 for the most number of weeks?
+- Did movie adaptations affect those books' rankings?
+- What author has had the most No. 1 books? 
+- What author has had the most No. 1 books in the last 5 years? 10 years?
+
+## Setup
+
+I'll load the necessary libraries. 
+
+```{r setup}
+library(tidyverse)
+library(lubridate)
+```
+
+## Import
+
+I'll import the data into the notebook by saving the file into a new object
+
+```{r import}
+bestsellers <- read_rds("data-processed/bestsellers-full.rds") # saving the data into a new object
+
+glimpse(bestsellers) # glimpsing the data
+```
+
+## What authors have had the most appearances on the list?
+
+I'll use gsa to find what authors have had the most appearances on the list.
+
+Romance author Danielle Steel has had the most appearances on the list with 998. Horror author Stephen King comes in second with 939. Legal thriller author John Grisham comes in third with 866, still hundreds above 4th place
+
+```{r most-appearances}
+bestsellers_appearances <- bestsellers |> # saving the data into a new object
+  group_by(author) |> # group by author
+  summarize(total_appearances = n()) |> # count appearances
+  arrange(desc(total_appearances)) # arrange in descending order by total_appearances
+
+bestsellers_appearances |> # look at the table
+   filter(total_appearances > 400) # only include rows with total_appearances over 400
+```
+
+## What authors have the highest appearances to books ratios?
+
+I noticed that the top authors have A LOT of books. It made me wonder if they are at the top more because of the amount of books they have released more than anything else. I'll find which authors have the highest appearances to books ratios. This will probably favor authors who have only had one book on this list, but it's still worth trying.
+
+I used gsa to count the number of unique titles each author has had on the list. Then, I joined this table with the one I created in the previous code chunk so I'll have a column for both titles and total_appearances. Then, I created a new column that takes the number of total_appearances divided by the number of titles to get appearances_per_title.
+
+It looks like I was right that this does favor authors with only one book on the list.
+
+Delia Owens takes first with 132 appearances for Where the Crawdads Sing. Kathryn Stockett is in second with 108 appearances for The Help. Matt Haig is in third with 105 appearances for The Midnight Library. 
+
+James Redfield, Anthony Doerr, Dr. Suess, Harper Lee, and Dan Brown do all make the top 15 with more than one title on the list. 
+
+```{r highest-book-to-appearances-ratio}
+bestsellers |> # start with the data
+  distinct(author, title) |> # only include distinct author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count the number of title each author has on the list
+  left_join(bestsellers_appearances) |> # left join with the previous table
+  mutate(appearances_per_title = round(total_appearances/titles, 1)) |> # add a new column that has the output of total_appearances divided by titles, round to one decimal place
+  arrange(desc(appearances_per_title)) |> # arrange in descending order by appearances_per_title
+  filter(appearances_per_title > 57) # only include rows with appearances_per_title greater than 57
+```
+
+
+## What books have been on the list for the most number of weeks?
+
+I'll use gsa again to find which books have been on the list for the most number of weeks.
+
+Oh, The Places You'll Go! by Dr. Suess takes first with 178 weeks. The Da Vinci Code by Dan Brown and The Celestine Prophecy by James Redfield are tied for second with 165 weeks. The Bridges of Madison County by Robert James Waller is in third (should it be fourth because of the tie?) with 164 weeks.
+
+```{r most-weeks}
+bestsellers |> # start with the data
+  group_by(author, title) |> # group by author and title
+  summarize(appearances = n()) |> # count number of appearances
+  arrange(desc(appearances)) |> # arrange in descending order
+  filter(appearances > 105) # only include rows with appearances greater than 105
+```
+
+## What books were No. 1 for the most number of weeks?
+
+I'll find which books were No. 1 for the most number of weeks by filtering first, and then using gsa.
+
+The Da Vinci Code has the most number of weeks at No. 1 with 59. Where the Crawdads Sing by Delia Owens is in second with 54 weeks at No. 1.
+
+It's interesting that both these books had their fair share of controversy AND movie adaptations. 
+
+```{r most-weeks-one}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows where the rank is 1
+  group_by(author, title) |> # group by author and title
+  summarize(appearances = n()) |> # count number of appearances
+  arrange(desc(appearances)) |> # arrange in descending order
+  filter(appearances > 33) # only include rows with appearances greather than 33
+```
+
+Let's see if the books returned to the charts after the move adaptations came out. 
+
+Firt, I'll look at The Da Vinci Code. Once I filtered to just look The Da Vinci Code, I noticed that it actually appeared to stay on the charts pretty consistently. I grouped and summarized by year to check what I was seeing. Rather than having a resurgance after the movie came out (in 2006), The Da Vinci code appears to have actually just stayed on the list pretty much the whole time. 
+
+```{r da-vinci-code}
+bestsellers |> # start with the data
+  filter(str_detect(title, "THE DA VINCI CODE")) |> # only inlcude The Da Vinci Code
+  group_by(year) |> # group by year
+  summarize(appearance = n()) # count the number of appearances in each year
+```
+
+Now, I'll look at Where the Crawdads Sing. The book was published in 2018 and the movie was released in July 2022 (the same week it got on the list in 2022). It looks like the book gained traction in the years following it's release, possibly from the adaptation being announced, but it had slowed down by the time the movie was released. 
+
+```{r where-the-crawdads-sing}
+bestsellers |> # start with the data
+  filter(str_detect(title, "WHERE THE CRAWDADS SING")) # only include Where the Crawdads Sing
+
+bestsellers |> # start with the data
+  filter(str_detect(title, "WHERE THE CRAWDADS SING")) |> # only include Where the Crawdads Sing
+  group_by(year) |> # group by year
+  summarize(appearances = n()) # count number of appearances per year
+```
+
+## What authors have had the most titles reach No. 1?
+
+I'll find which authors have had the most No. 1 titles.
+
+Stephen King is in first with 42 titles. John Grisham is in second with 38 titles. Danielle Steel is in third with 36 titles. 
+
+These authors were also top three for most appearances on the chart, just in a different order. 
+
+```{r most-one-titles}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows with a rank of 1
+  distinct(author, title) |> # only include distinct author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count number of titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 16) # only include rows with titles greater than 16
+```
+
+## What author has had the most No. 1 books in the last 5 years? 10 years?
+
+I'll find which auhtors have had the most No. 1 books in the last 5 years.
+
+John Grisham is in first with 8. David Baldacci is in second with 7. There is a huge tie for third: Daniel Silva, Elin Hilderbrand, Louise Penny, Nora Roberts, and Stephen King all have 4. 
+
+```{r most-ones-last-five}
+bestsellers |> # start with the data
+  filter(rank == 1, 
+         year > 2018) |> # only include rows with a rank of 1 and a year over 2018
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 2) # only include titles above 3
+```
+
+Now, I'll look at the last 10 years.
+
+The results are fairly similar to the last five years. John Grisham is in first wit h15. David Baldacci is in second with 14. Stephen King is in third with 12. 
+
+```{r most-ones-last-ten}
+bestsellers |> # start with the data
+  filter(rank == 1,
+         year > 2012) |> # only include rows with a rank of 1 and a year over 2012
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 7) # only include titles above 7
+```
