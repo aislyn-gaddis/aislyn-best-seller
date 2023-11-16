@@ -8,5 +8,5 @@ navbar:
       href: 01-import.html
     - text: "Hardcover Fiction Analysis"
       href: 02-analysis.html
-    - text: "Combined Print and Ebook Analysis"
+    - text: "Combined Print and E-Book Analysis"
       href: 03-analysis.html
