@@ -254,7 +254,7 @@ $(document).ready(function () {
   <a href="02-analysis.html">Hardcover Fiction Analysis</a>
 </li>
 <li>
-  <a href="03-analysis.html">Combined Print and Ebook Analysis</a>
+  <a href="03-analysis.html">Combined Print and E-Book Analysis</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -268,7 +268,7 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Bestsellers import</h1>
+<h1 class="title toc-ignore">Best Sellers Import</h1>
 
 </div>
 
@@ -285,12 +285,12 @@ $(document).ready(function () {
 <p>I’ll load any libraries I might need.</p>
 <pre class="r"><code>library(readr)
 library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+<pre><code>## ── Attaching packages ─────────────
 ## ✔ ggplot2 3.4.0      ✔ dplyr   1.0.10
 ## ✔ tibble  3.1.8      ✔ stringr 1.5.0 
 ## ✔ tidyr   1.2.1      ✔ forcats 0.5.2 
 ## ✔ purrr   1.0.1      
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ──────────────────────
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre class="r"><code>library(janitor)</code></pre>
@@ -325,7 +325,7 @@ the New York Times Bestsellers list going back to when it started in
 <pre class="r"><code>bestsellers &lt;- read_tsv(&quot;data-raw/nyt_full.tsv&quot;) |&gt; 
   glimpse()</code></pre>
 <pre><code>## Rows: 60386 Columns: 6
-## ── Column specification ────────────────────────────────────────────────────────
+## ── Column specification ───────────
 ## Delimiter: &quot;\t&quot;
 ## chr  (2): title, author
 ## dbl  (3): year, rank, title_id
@@ -426,7 +426,7 @@ dfs |&gt; write_rds(&quot;data-raw/bestsellers-combined-web-scrape.rds&quot;)
 bestsellers_combined &lt;- read_rds(&quot;data-raw/bestsellers-combined-web-scrape.rds&quot;) 
 
 bestsellers_combined |&gt; glimpse()</code></pre>
-<pre><code>## Rows: 9,975
+<pre><code>## Rows: 9,900
 ## Columns: 4
 ## $ title  &lt;chr&gt; &quot;TICK TOCK&quot;, &quot;THE GIRL WITH THE DRAGON TATTOO&quot;, &quot;THE GIRL WHO P…
 ## $ author &lt;chr&gt; &quot;by James Patterson and Michael Ledwidge&quot;, &quot;by Stieg Larsson&quot;, …
@@ -480,7 +480,7 @@ dataset.</p>
          title,
          author) |&gt; # putting the columns in the same order as the first dataset
   glimpse() # glimpsing the data</code></pre>
-<pre><code>## Rows: 9,975
+<pre><code>## Rows: 9,900
 ## Columns: 5
 ## $ year   &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 201…
 ## $ week   &lt;date&gt; 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 20…
