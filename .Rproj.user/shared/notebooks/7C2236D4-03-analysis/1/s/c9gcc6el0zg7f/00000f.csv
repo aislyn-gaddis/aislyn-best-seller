@@ -1,0 +1,4 @@
+"0","bestsellers |> # start with the data"
+"0","  filter(str_detect(title, ""FIFTY SHADES OF GREY"")) |> # only include Fifty Shades of Grey"
+"0","  group_by(year) |> # group by year"
+"0","  summarize(appearance = n()) # count the number of appearances in each year"

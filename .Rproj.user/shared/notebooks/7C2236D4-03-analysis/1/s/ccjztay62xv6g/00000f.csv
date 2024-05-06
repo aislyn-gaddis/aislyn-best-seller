@@ -1,0 +1,7 @@
+"0","bestsellers |> # start with the data"
+"0","  filter(year > 2013,"
+"0","         rank == 1) |> # only include rows with a year over 2013 and a rank of 1"
+"0","  group_by(author) |> # group by author"
+"0","  summarize(appearances = n()) |> # count appearances per author"
+"0","  arrange(desc(appearances)) |> # arrange in descending order by appearances"
+"0","  filter(appearances > 10) # only include appearances above 10"

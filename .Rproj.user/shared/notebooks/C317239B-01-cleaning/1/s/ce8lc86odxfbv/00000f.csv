@@ -1,0 +1,27 @@
+"0","bestsellers_two_clean <- bestsellers_two |> # saving this chunk into a new object and starting with the data"
+"0","  mutate(year = year(date), # making a year column"
+"0","         week = date, # making a new date column called ""week"" to match the first dataset"
+"0","         author = str_remove_all(author, ""by ""), # removing the ""by "" from the author column"
+"0","         rank = as.numeric(rank)) |> # changing the rank column from int to dbl"
+"0","  select(year,"
+"0","         week,"
+"0","         rank,"
+"0","         title,"
+"0","         author) |> # putting the columns in the same order as the first dataset"
+"0","  glimpse() # glimpsing the data"
+"1","Rows: 2,685"
+"1",""
+"1","
+"
+"1","Columns: 5"
+"1",""
+"1","
+"
+"1","$ year   [3m[38;5;246m<dbl>[39m[23m 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 2020, 20…
+$ week   [3m[38;5;246m<date>[39m[23m 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2…
+$ rank   [3m[38;5;246m<dbl>[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7,…
+$ title  [3m[38;5;246m<chr>[39m[23m ""READY PLAYER TWO"", ""DEADLY CROSS"", ""THE RETURN"", ""A TIME FOR MERCY"", ""DAYLIGHT"", ""THE AWAKENING"", ""THE LAW OF INNOCENCE"",…
+$ author [3m[38;5;246m<chr>[39m[23m ""Ernest Cline"", ""James Patterson"", ""Nicholas Sparks"", ""John Grisham"", ""David Baldacci"", ""Nora Roberts"", ""Michael Connelly""…"
+"1",""
+"1","
+"

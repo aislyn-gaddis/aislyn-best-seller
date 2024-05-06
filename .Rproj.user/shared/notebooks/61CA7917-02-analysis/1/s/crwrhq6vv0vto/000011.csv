@@ -1,0 +1,19 @@
+"0","bestsellers <- read_rds(""data-processed/bestsellers-full.rds"") # saving the data into a new object"
+"0",""
+"0","glimpse(bestsellers) # glimpsing the data"
+"1","Rows: 63,071"
+"1",""
+"1","
+"
+"1","Columns: 5"
+"1",""
+"1","
+"
+"1","$ year   [3m[38;5;246m<dbl>[39m[23m 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 1931, 19…
+$ week   [3m[38;5;246m<date>[39m[23m 1931-10-12, 1931-10-12, 1931-10-12, 1931-10-12, 1931-10-12, 1931-11-16, 1931-11-16, 1931-11-16, 1931-11-16, 1931-11-16, 1…
+$ rank   [3m[38;5;246m<dbl>[39m[23m 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1,…
+$ title  [3m[38;5;246m<chr>[39m[23m ""THE TEN COMMANDMENTS"", ""FINCHE'S FORTUNE"", ""THE GOOD EARTH"", ""SHADOWS ON THE ROCK"", ""SCARMOUCHE THE KING MAKER"", ""MAID IN…
+$ author [3m[38;5;246m<chr>[39m[23m ""Warwick Deeping"", ""Mazo de la Roche"", ""Pearl S. Buck"", ""Willa Cather"", ""Rafael Sabatini"", ""John Galsworthy"", ""A. A. Milne…"
+"1",""
+"1","
+"

@@ -1,0 +1,215 @@
+---
+title: "Cleaning"
+---
+
+## Goals of the notebook
+
+In this notebook, I'm going to 
+
+- import the Post45 Data Collective's NYT bestseller data set
+- web scrape the NYT Hardcover Fiction List
+- web scrape the NYT Combined Print and E-Book Fiction List
+- clean the data
+- join the two hardcover fiction data sets 
+- save the data
+
+I'll load any libraries I might need.
+
+```{r setup}
+library(readr)
+library(tidyverse)
+library(janitor)
+library(lubridate)
+library(rvest)
+```
+
+## Main Data Import
+
+I'll import the years I already have. I downloaded this from the [Post45 Data Collective](https://data.post45.org/new-york-times-hardcover-fiction-bestsellers-1931-2020-curatorial-statement/) which is run by Emory University. It's every week of the New York Times Bestsellers list going back to when it started in 1931 up to December 2020.
+
+```{r main-import}
+bestsellers <- read_tsv("data-raw/nyt_full.tsv") |> 
+  glimpse()
+```
+
+## Hardcover Fiction Web Scrape
+
+Now, I'm going to get the missing years of the hardcover fiction data by web scraping directly from the NYT's website. You might might need to run the code multiple times before it will successfully complete. I also recommend you comment the code after completion since it takes a bit to run.
+
+```{r web-scrape}
+start_date <- as.Date("2020-12-13")
+end_date <- as.Date("2024-05-12")
+
+dates <- seq(start_date, end_date, by = "week")
+
+dfs <- map_dfr(dates, function(date) {
+  url <- sprintf("https://www.nytimes.com/books/best-sellers/%s/hardcover-fiction/", format(date, "%Y/%m/%d"))
+  
+  page <- read_html(url)
+  
+  titles <- page %>%
+    html_nodes(".css-5pe77f") %>%
+    html_text()
+  
+  authors <- page %>%
+    html_nodes(".css-hjukut") %>%
+    html_text()
+  
+  ranks <- seq_along(titles)
+  
+  data.frame(title = titles, author = authors, rank = ranks, date = date)
+})
+
+dfs |> write_rds("data-raw/bestsellers-web-scrape.rds")
+
+```
+
+I'll save the new file into a new object and glimpse it. I also saved the data into a csv just for the purpose of importing it to google sheets later.
+
+```{r bestsellers-two-glimpse}
+bestsellers_two <- read_rds("data-raw/bestsellers-web-scrape.rds") # creating a new object with a file 
+
+bestsellers_two |> write_csv("data-raw/bestsellers-web-scrape.csv") # saving the object into a csv to be able to upload it to google sheets
+
+bestsellers_two |> glimpse() # glimpsing the data
+```
+
+## Combined Print and E-book Web Scrape
+
+Now I'll do a similair web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. I also recommend commenting it after you finish running it. 
+
+```{r web-scrape-combined}
+start_date <- as.Date("2011-02-13")
+end_date <- as.Date("2023-11-05")
+
+dates <- seq(start_date, end_date, by = "week")
+
+dfs <- map_dfr(dates, function(date) {
+  url <- sprintf("https://www.nytimes.com/books/best-sellers/%s/combined-print-and-e-book-fiction/", format(date, "%Y/%m/%d"))
+  
+  page <- tryCatch(read_html(url), error = function(e) NULL)
+  
+  if (!is.null(page)) {
+    titles <- page %>%
+    html_nodes(".css-5pe77f") %>%
+    html_text()
+
+    authors <- page %>%
+    html_nodes(".css-hjukut") %>%
+    html_text()
+    
+    ranks <- seq_along(titles)
+    
+    data.frame(title = titles, author = authors, rank = ranks, date = date)
+  } else {
+    NULL
+  }
+})
+
+dfs |> write_rds("data-raw/bestsellers-combined-web-scrape.rds")
+
+bestsellers_combined <- read_rds("data-raw/bestsellers-combined-web-scrape.rds") 
+
+bestsellers_combined |> glimpse()
+
+```
+
+## Cleaning
+
+First, I'll clean the main data file from the Post45 data collective. The only thing I need to do is remove the title_id column since I won't be using it.
+
+```{r main-clean}
+bestsellers_clean <- bestsellers |> # saving this chunk into a new object and starting with the data
+  select(-title_id) |> # removing the title_id column
+  glimpse() # glimpsing the data
+```
+
+Now, I'll clean the web scrape to make it match the first dataset.
+
+```{r web-scrape-clean}
+bestsellers_two_clean <- bestsellers_two |> # saving this chunk into a new object and starting with the data
+  mutate(year = year(date), # making a year column
+         week = date, # making a new date column called "week" to match the first dataset
+         author = str_remove_all(author, "by "), # removing the "by " from the author column
+         rank = as.numeric(rank)) |> # changing the rank column from int to dbl
+  select(year,
+         week,
+         rank,
+         title,
+         author) |> # putting the columns in the same order as the first dataset
+  glimpse() # glimpsing the data
+```
+
+
+I'll do the same for the combined list. 
+
+```{r web-scrape-clean-combined}
+bestsellers_combined_clean <- bestsellers_combined |> # saving this chunk into a new object and starting with the data
+  mutate(year = year(date), # making a year column
+         week = date, # making a new date column called "week" to match the first dataset
+         author = str_remove_all(author, "by "), # removing the "by " from the author column
+         rank = as.numeric(rank)) |> # changing the rank column from int to dbl
+  select(year,
+         week,
+         rank,
+         title,
+         author) |> # putting the columns in the same order as the first dataset
+  glimpse() # glimpsing the data
+```
+
+## Combining the data
+
+Now that both of the hardcover fiction datasets have the same columns, I'll combine them.
+
+```{r combine}
+bestsellers_full <- bestsellers_clean |> # saving this chunk into a new object and starting with the data
+  bind_rows(bestsellers_two_clean) |> # binding the two datasets together
+  glimpse()
+```
+
+## Fixing non-split columns
+
+There are some columns where the title and author aren't split properly.
+
+I'll start by getting rid of those columns from the main data set, then creating a new object with just those columns to fix them.
+
+Then, I separate the title and author into new columns using the , in between them. I'll also remove the by and the publisher information
+
+```{r column-fix}
+bestsellers_no_na <- bestsellers_full |> # saving the data into a new object
+  filter(!is.na(author)) # removing columns where author is na
+
+bestsellers_na <- bestsellers_full |> # saving the data into a new object
+  filter(is.na(author)) # only including columns where author is na
+
+bestsellers_na_clean <- bestsellers_na |> # saving the data into a new object
+  separate(title, sep = ",", into = c("title", "author")) |> # separate the title column into two columns named title and author based on the comma
+  mutate(author = str_remove_all(author, "by ")) |> # removing the by
+  mutate(author = str_remove_all(author, "\\(.*")) |> # removing the publisher information using the ()
+  mutate(author = str_sub(author, end = -3))# removing the period and spaces by removing the last 3 characters of the column
+
+bestsellers_na_clean
+```
+
+## Joining the data again
+
+Now that I've fixed the rows that didn't separate properly, I'll join everything back together.
+
+```{r combine-two}
+bestsellers_full_clean <- bestsellers_no_na |> 
+  bind_rows(bestsellers_na_clean) |> 
+  glimpse()
+```
+It looks like everything parsed correctly in the combined list data, so I don't need to worry about that.
+
+## Exporting the data
+
+I'll export the data to my computer as an rds and as a csv
+
+```{r export}
+bestsellers_full_clean |> write_rds("data-processed/bestsellers-full.rds")
+bestsellers_full_clean |> write_csv("data-processed/bestsellers-full.csv")
+
+bestsellers_combined_clean |> write_rds("data-processed/bestsellers-combined.rds")
+bestsellers_combined_clean |> write_csv("data-processed/bestsellers-combined.csv")
+```

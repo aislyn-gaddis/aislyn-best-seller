@@ -1,0 +1,394 @@
+---
+title: "Hardcover Fiction Analysis"
+---
+
+## Goals of the notebook
+
+Here's what I'll find in this notebook
+
+- I'll make a searchable table
+- What authors have had the most appearances on the list?
+- What author has had the most appearances this year? last 2 years? 5 years? 10 years?
+- What authors have had the most No. 1 appearances? 
+- What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+- What authors have had the most books on the list?
+- What author has had the most books on the the list this year? last 2 years? 5 years? 10 years?
+- What books have been on the list for the most number of weeks?
+- What books were No. 1 for the most number of weeks?
+- How did movie adaptations affect the charts?
+- What authors have had the most No. 1 books? 
+- What author has had the most No. 1 books in the last 5 years? 10 years?
+
+## Setup
+
+I'll load the necessary libraries. 
+
+```{r setup}
+library(tidyverse)
+library(lubridate)
+library(DT)
+```
+
+## Import
+
+I'll import the data into the notebook by saving the file into a new object
+
+```{r import}
+bestsellers <- read_rds("data-processed/bestsellers-full.rds") # saving the data into a new object
+
+glimpse(bestsellers) # glimpsing the data
+```
+
+## Making a searchable table
+
+I'll make a searchable table to look for certain authors and books.
+
+```{r search-table}
+bestsellers |> 
+  datatable()
+```
+
+## What authors have had the most appearances on the list?
+
+I'll use gsa to find what authors have had the most appearances on the list.
+
+Romance author Danielle Steel has had the most appearances on the list with 1011. Horror author Stephen King comes in second with 948. Legal thriller author John Grisham comes in third with 868, still hundreds above 4th place
+
+I'm using this data for a story chart. [Here](https://www.datawrapper.de/_/7XJdM/) is a link to that chart.
+
+```{r most-appearances}
+bestsellers_appearances <- bestsellers |> # saving the data into a new object
+  group_by(author) |> # group by author
+  summarize(total_appearances = n()) |> # count appearances
+  arrange(desc(total_appearances)) # arrange in descending order by total_appearances
+
+bestsellers_appearances |> # start with the data
+   filter(total_appearances > 400) |> # only include rows with total_appearances over 400
+  write_csv("data-processed/most-appearances.csv") |> # save the data for data wrapper
+  print() # print it
+```
+
+## What author has had the most appearances this year? last 2 years? 5 years? 10 years?
+
+First, I'll find which authors have had the most appearances this year.
+
+Bonnie Garmus has had 45, Barbara Kingsolver has had 43, and Gabrielle Zevin has had 37.
+
+```{r most-appearances-this-year}
+bestsellers |> # start with the data
+  filter(year > 2022) |> # only include rows with a year over 2022
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 15) # only include appearances above 15
+```
+
+I'll look at the past two years.
+
+It's Bonnie Garmus with 76.
+
+```{r most-appearances-two-year}
+bestsellers |> # start with the data
+  filter(year > 2021) |> # only include rows with a year over 2021
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 25) # only include appearances above 25
+```
+
+I'll look at the past five years.
+
+It's John Grisham with 134.
+
+```{r most-appearances-five-year}
+bestsellers |> # start with the data
+  filter(year > 2018) |> # only include rows with a year over 2018
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 61) # only include appearances above 61
+```
+
+I'll look at 10 years.
+
+It's John Grisham again with 251.
+
+```{r most-appearances-ten-year}
+bestsellers |> # start with the data
+  filter(year > 2013) |> # only include rows with a year over 2013
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 100) # only include appearances above 100
+```
+
+## What authors have had the most No. 1 appearances?
+
+John Grisham comes in first with 186. Stephen King takes second with 151. James A. Michener takes third with 132.
+
+```{r most-one-appearances}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows with a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 61) # only include appearances above 61
+```
+
+## What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+
+I'll look at this year first.
+
+It's Bonnie Garmus with 13.
+
+```{r most-one-appearances-this-year}
+bestsellers |> # start with the data
+  filter(year > 2022,
+         rank == 1) |> # only include rows with a year over 2022 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 1) # only include appearances above 1
+```
+
+Now two years.
+
+It's Bonnie Garmus with 14.
+
+```{r most-one-appearances-two-years}
+bestsellers |> # start with the data
+  filter(year > 2021,
+         rank == 1) |> # only include rows with a year over 2021 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 4) # only include appearances above 4
+```
+
+5 years?
+
+It's Delia Owens with 54.
+
+```{r most-one-appearances-five-years}
+bestsellers |> # start with the data
+  filter(year > 2018,
+         rank == 1) |> # only include rows with a year over 2018 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 4) # only include appearances above 4
+```
+
+And finally, 10 years?
+
+It's John Grisham with 57, but Delia Owens comes close with 54.
+
+```{r most-one-appearances-ten-years}
+bestsellers |> # start with the data
+  filter(year > 2013,
+         rank == 1) |> # only include rows with a year over 2013 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 9) # only include appearances above 9
+```
+
+## What authors have had the most books on the list?
+
+Danielle Steel has had the most books on the list with 136. Stuart Woods comes in a far away second with 68. Stephen King comes in third with 57.
+
+```{r most-books}
+bestsellers |> # start with the data
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 40) # only include titles above 40
+```
+
+## What author has had the most books on the list in the last year? 2 years? 5 years? 10 years?
+
+I'll start with this year.
+
+It's Danielle Steel with 6.
+
+```{r most-books-this-year}
+bestsellers |> # start with the data
+  filter(year >2022) |> # only include rows with year over 2022
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 1) # only include titles above 1
+```
+
+I'll look at two years.
+
+It's Danielle Steel with 13.
+
+```{r most-books-last-two}
+bestsellers |> # start with the data
+  filter(year >2021) |> # only include rows with a year over 2021
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 2) # only include titles above 2
+```
+
+I'll look at the last 5 years.
+
+It's Danielle Steel again with 33.
+
+```{r most-books-last-five}
+bestsellers |> # start with the data
+  filter(year > 2018) |> # only include rows with a year over 2018
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 7) # only include titles above 7
+```
+
+Now, I'll look at the last 10 years.
+
+It's also Danielle Steel with 59.
+
+```{r most-books-last-ten}
+bestsellers |> # start with the data
+  filter(year > 2013) |> # only include rows with a year over 2013
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 13) # only include titles above 13
+```
+
+## What books have been on the list for the most number of weeks?
+
+I'll use gsa again to find which books have been on the list for the most number of weeks.
+
+Oh, The Places You'll Go! by Dr. Suess takes first with 178 weeks on the list. The Da Vinci Code by Dan Brown and The Celestine Prophecy by James Redfield are tied for second with 165 weeks. The Bridges of Madison County by Robert James Waller is in third (should it be fourth because of the tie?) with 164 weeks.
+
+I'm using this data for a story chart. [Here](https://www.datawrapper.de/_/tbXP4/) is a link to that chart.
+
+```{r most-weeks}
+bestsellers |> # start with the data
+  group_by(author, title) |> # group by author and title
+  summarize(appearances = n()) |> # count number of appearances
+  arrange(desc(appearances)) |> # arrange in descending order
+  filter(appearances > 105) |> # only include rows with appearances greater than 105
+  write_csv("data-processed/most-weeks.csv") |> # save the data for data wrapper
+  print() # print it
+```
+
+## What books were No. 1 for the most number of weeks?
+
+I'll find which books were No. 1 for the most number of weeks by filtering first, and then using gsa.
+
+The Da Vinci Code has the most number of weeks at No. 1 with 59. Where the Crawdads Sing by Delia Owens is in second with 54 weeks at No. 1.
+
+It's interesting that both these books had their fair share of controversy AND movie adaptations. 
+
+I'm using this data for a story chart. [Here](https://www.datawrapper.de/_/G4mb2/) is a link to that chart.
+
+```{r most-weeks-one}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows where the rank is 1
+  group_by(author, title) |> # group by author and title
+  summarize(appearances = n()) |> # count number of appearances
+  arrange(desc(appearances)) |> # arrange in descending order
+  filter(appearances > 33) |> # only include rows with appearances greater than 33
+  write_csv("data-processed/most-one-weeks.csv") |> # save the data for data wrapepr
+  print() # print it
+```
+
+## How did movie adaptations affect the charts?
+
+Let's see if the books returned to the charts after the move adaptations came out. 
+
+First, I'll look at The Da Vinci Code. Once I filtered to just look The Da Vinci Code, I noticed that it actually appeared to stay on the charts pretty consistently. I grouped and summarized by year to check what I was seeing. Rather than having a resurgance after the movie came out (in 2006), The Da Vinci code appears to have actually just stayed on the list pretty much the whole time. 
+
+```{r da-vinci-code}
+bestsellers |> # start with the data
+  filter(str_detect(title, "THE DA VINCI CODE")) |> # only inlcude The Da Vinci Code
+  group_by(year) |> # group by year
+  summarize(appearance = n()) # count the number of appearances in each year
+```
+
+Now, I'll look at Where the Crawdads Sing. The book was published in 2018 and the movie was released in July 2022 (the same week it got on the list in 2022). It looks like the book gained traction in the years following it's release, possibly from the adaptation being announced, but it had slowed down by the time the movie was released. 
+
+```{r where-the-crawdads-sing}
+bestsellers |> # start with the data
+  filter(str_detect(title, "WHERE THE CRAWDADS SING")) # only include Where the Crawdads Sing
+
+bestsellers |> # start with the data
+  filter(str_detect(title, "WHERE THE CRAWDADS SING")) |> # only include Where the Crawdads Sing
+  group_by(year) |> # group by year
+  summarize(appearances = n()) # count number of appearances per year
+```
+
+## What authors have had the most titles reach No. 1?
+
+I'll find which authors have had the most No. 1 titles.
+
+Stephen King is in first with 43 No. 1 titles. John Grisham is in second with 39 titles. Danielle Steel is in third with 36 titles. 
+
+These authors were also top three for most appearances on the chart, just in a different order. 
+
+```{r most-one-titles}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows with a rank of 1
+  distinct(author, title) |> # only include distinct author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count number of titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 16) # only include rows with titles greater than 16
+```
+
+## What author has had the most No. 1 books in the last 2 years? 5 years? 10 years?
+
+I'll start with 2 years.
+
+David Baldacci and John Grisham are tied with 4.
+
+```{r most-one-titles-last-two}
+bestsellers |> # start with the data
+  filter(rank == 1, 
+         year >2021) |> # only include rows with a rank of 1 and a year over 2021
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 1) # only include titles above 1
+```
+
+I'll find which authors have had the most No. 1 books in the last 5 years.
+
+John Grisham is in first with 9 No.1 titles in the last 5 years. David Baldacci is in second with 8.
+
+```{r most-one-titles-last-five}
+bestsellers |> # start with the data
+  filter(rank == 1, 
+         year > 2018) |> # only include rows with a rank of 1 and a year over 2018
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 2) # only include titles above 2
+```
+
+Now, I'll look at the last 10 years.
+
+The results are fairly similar to the last five years. John Grisham is in first with 15 No. 1 titles in the last 10 years. David Baldacci is in second with 14. Stephen King is in third with 12. 
+
+```{r most-one-titles-last-ten}
+bestsellers |> # start with the data
+  filter(rank == 1,
+         year > 2013) |> # only include rows with a rank of 1 and a year over 2013
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 7) # only include titles above 7
+```

@@ -1,0 +1,392 @@
+---
+title: "Combined Print and E-Book Fiction Analysis"
+---
+
+## Goals of the notebook
+
+Here's what I'll find in this notebook
+
+- I'll make a searchable table
+- What authors have had the most appearances on the list?
+- What author has had the most appearances this year? last 2 years? 5 years? 10 years?
+- What authors have had the most No. 1 appearances? 
+- What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+- What authors have had the most books on the list?
+- What author has had the most books on the the list this year? last 2 years? 5 years? 10 years?
+- What books have been on the list for the most number of weeks?
+- What books were No. 1 for the most number of weeks?
+- How did movie adaptations affect the charts?
+- What authors have had the most No. 1 books? 
+- What author has had the most No. 1 books in the last 5 years? 10 years?
+
+## Setup
+
+I'll load the necessary libraries. 
+
+```{r setup}
+library(tidyverse)
+library(lubridate)
+library(DT)
+```
+
+## Import
+
+I'll import the data into the notebook by saving the file into a new object
+
+```{r import}
+bestsellers <- read_rds("data-processed/bestsellers-combined.rds") # saving the data into a new object
+
+glimpse(bestsellers) # glimpsing the data
+```
+
+## Making a searchable table
+
+I'll make a searchable table to look for certain authors and books.
+
+```{r search-table}
+bestsellers |> 
+  datatable()
+```
+
+
+## What authors have had the most appearances on the list?
+
+I'll use gsa to find what authors have had the most appearances on the list.
+
+Colleen Hoover blows everyone else out of the water with 415 total appearances. John Grisham comes in ssecond with 339, and David Baldacci comes in third with 240.
+
+```{r most-appearances}
+bestsellers_appearances <- bestsellers |> # saving the data into a new object
+  group_by(author) |> # group by author
+  summarize(total_appearances = n()) |> # count appearances
+  arrange(desc(total_appearances)) # arrange in descending order by total_appearances
+
+bestsellers_appearances |> # start with the data
+   filter(total_appearances > 145) |> # only include rows with total_appearances over 145
+  write_csv("data-processed/most-appearances.csv") |> # save the data for data wrapper
+  print() # print it
+```
+
+## What author has had the most appearances this year? last 2 years? 5 years? 10 years?
+
+First, I'll find which authors have had the most appearances this year.
+
+Again, Colleen Hoover blows everyone else out of the water with more than triple 2nd place. She has 160 appearances to be exact.
+
+```{r most-appearances-this-year}
+bestsellers |> # start with the data
+  filter(year > 2022) |> # only include rows with a year over 2022
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 14) # only include appearances above 14
+```
+
+I'll look at the past two years.
+
+Colleen Hoover again. More than triple second place with 367.
+
+```{r most-appearances-two-year}
+bestsellers |> # start with the data
+  filter(year > 2021) |> # only include rows with a year over 2021
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 22) # only include appearances above 22
+```
+
+I'll look at the past five years.
+
+Colleen Hoover again, still with a large lead, but somewhat less than in the previous ones. She has 394.
+
+```{r most-appearances-five-year}
+bestsellers |> # start with the data
+  filter(year > 2018) |> # only include rows with a year over 2018
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 55) # only include appearances above 55
+```
+
+I'll look at 10 years.
+
+This is crazy to me that Colleen Hoover still has the lead despite only becoming popular a few years ago. Note that she only has 6 appearances 2013-2017 and still takes the lead. She has 401 total appearances at this point.
+
+```{r most-appearances-ten-year}
+bestsellers |> # start with the data
+  filter(year > 2013) |> # only include rows with a year over 2013
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 105) # only include appearances above 105
+```
+
+## What authors have had the most No. 1 appearances?
+
+It's John Grisham with 47, though Delia Owens comes close with 44. Colleen Hoover takes third with 33.
+
+```{r most-one-appearances}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows with a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 15) # only include appearances above 15
+```
+
+## What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
+
+I'll look at this year first.
+
+It's Colleen Hoover with 14.
+
+```{r most-one-appearances-this-year}
+bestsellers |> # start with the data
+  filter(year > 2022,
+         rank == 1) |> # only include rows with a year over 2022 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 1) # only include appearances above 1
+```
+
+Now two years.
+
+It's Colleen Hoover with 33.
+
+```{r most-one-appearances-two-years}
+bestsellers |> # start with the data
+  filter(year > 2021,
+         rank == 1) |> # only include rows with a year over 2021 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 2) # only include appearances above 2
+```
+
+5 years?
+
+First thing Colleen Hoover has not won. Delia Owens takes it with 44, most likely with Where the Crawdads Sing. Colleen Hoover comes in second with 33.
+
+```{r most-one-appearances-five-years}
+bestsellers |> # start with the data
+  filter(year > 2018,
+         rank == 1) |> # only include rows with a year over 2018 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 5) # only include rows with appearances above 5
+```
+
+And finally, 10 years?
+
+Also Delia Owens with 44 for Where the Crawdads Sing, but closely followed by John Grisham at 40.
+
+```{r most-one-appearances-ten-years}
+bestsellers |> # start with the data
+  filter(year > 2013,
+         rank == 1) |> # only include rows with a year over 2013 and a rank of 1
+  group_by(author) |> # group by author
+  summarize(appearances = n()) |> # count appearances per author
+  arrange(desc(appearances)) |> # arrange in descending order by appearances
+  filter(appearances > 10) # only include appearances above 10
+```
+
+## What authors have had the most books on the list?
+
+Danielle Steel has had the most with 68 books on the list. Christine Feehan comes in second with 54. Stuart Woods takes third with 44. 
+
+```{r most-books}
+bestsellers |> # start with the data
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 21) # only include titles above 21
+```
+
+## What author has had the most books on the list in the last year? 2 years? 5 years? 10 years?
+
+I'll start with this year.
+
+It's Colleen Hoover with 7.
+
+```{r most-books-this-year}
+bestsellers |> # start with the data
+  filter(year >2022) |> # only include rows with a year over 2022
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 1) # only include titles above 1
+```
+
+I'll look at two years.
+
+It's Danielle Steel with 13 Colleen Hoover in a close second with 11.
+
+```{r most-books-two-years}
+bestsellers |> # start with the data
+  filter(year >2021) |> # only include rows with a year over 2021
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 3) # only include titles above 3
+```
+
+I'll look at the last 5 years.
+
+It's Danielle Steel again with 34.
+
+```{r most-books-last-five}
+bestsellers |> # start with the data
+  filter(year > 2018) |> # only include rows with a year over 2018
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 9) # only include titles above 9
+```
+
+Now, I'll look at the last 10 years.
+
+It's also Danielle Steel with 59.
+
+```{r most-ones-last-ten}
+bestsellers |> # start with the data
+  filter(year > 2013) |> # only include rows with a year over 2013
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 17) # only include titles above 17
+```
+
+
+## What books have been on the list for the most number of weeks?
+
+I'll use gsa again to find which books have been on the list for the most number of weeks.
+
+Delia Owens wins with 193 appearances for Where the Crawdads Sing. Gillian Flynn comes in second with 122 for Where the Crawdads Sing. Colleen Hoover is the only person with 2 books in the top 10 and takes third with 117.
+
+```{r most-weeks}
+bestsellers |> # start with the data
+  group_by(author, title) |> # group by author and title
+  summarize(appearances = n()) |> # count number of appearances
+  arrange(desc(appearances)) |> # arrange in descending order
+  filter(appearances > 67) |> # only include rows with appearances greater than 67
+  write_csv("data-processed/most-weeks.csv") |> # save the data for data wrapper
+  print() # print it
+```
+
+## What books were No. 1 for the most number of weeks?
+
+I'll find which books were No. 1 for the most number of weeks by filtering first, and then using gsa.
+
+Where the Crawdads Sing was number one for the most number of weeks by a good amount with 44. Fifty Shades of Grey by E. L. James is in second with 29.
+
+```{r most-weeks-one}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows where the rank is 1
+  group_by(author, title) |> # group by author and title
+  summarize(appearances = n()) |> # count number of appearances
+  arrange(desc(appearances)) |> # arrange in descending order
+  filter(appearances > 6) |> # only include rows with appearances greater than 6
+  write_csv("data-processed/most-one-weeks.csv") |> # save the data for data wrapepr
+  print() # print it
+```
+
+Let's see if the books returned to the charts after the move adaptations came out. 
+
+First, I'll look at Where the Crawdads Sing. he book was published in 2018 and the movie was released in July 2022. It looks like it stayed on the list pretty consistently after it first gained traction in 2019, though there's a small dip in 2021, and then its sales faded in 2023 after the movie talk wore off. 
+
+```{r where-the-crawdads-sing}
+bestsellers |> # start with the data
+  filter(str_detect(title, "WHERE THE CRAWDADS SING")) |> # only include Where the Crawdads Sing
+  group_by(year) |> # group by year
+  summarize(appearance = n()) # count the number of appearances in each year
+```
+
+Now, I'll look at Fifty Shades of Grey. The book was published in 2011 and the movie was released in 2015. It looks like it got most traction in 2012 and 2013 (when the book actually got a redistribution deal after a small initial publication) with a slight resurgence in 2015 with the movie release. 
+
+```{r fifty-shades-of-grey}
+bestsellers |> # start with the data
+  filter(str_detect(title, "FIFTY SHADES OF GREY")) |> # only include Fifty Shades of Grey
+  group_by(year) |> # group by year
+  summarize(appearance = n()) # count the number of appearances in each year
+```
+
+Finally, I'll look at Gone Girl. The book was published in 2012 and the movie was released in 2014. It looks like it stayed on the list pretty consistently after publication, peaking in 2014 with the movie release and then dropping off in 2015. 
+
+```{r gone-girl}
+bestsellers |> # start with the data
+  filter(str_detect(title, "GONE GIRL")) |> # only include Gone Girl
+  group_by(year) |> # group by year
+  summarize(appearance = n()) # count the number of appearances in each year
+```
+
+## What authors have had the most titles reach No. 1?
+
+I'll find which authors have had the most No. 1 titles.
+
+Nora Roberts takes first on this one with 20 number one titles.
+
+These authors were also top three for most appearances on the chart, just in a different order. 
+
+```{r most-one-titles}
+bestsellers |> # start with the data
+  filter(rank == 1) |> # only include rows with a rank of 1
+  distinct(author, title) |> # only include distinct author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count number of titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 8) # only include rows with titles greater than 8
+```
+
+## What author has had the most No. 1 books in the last 2 years? 5 years? 10 years?
+
+I'll start with 2 years.
+
+Colleen Hoover and John Sandford are tied for first with 4 No. 1 books.
+
+```{r most-one-titles-last-two}
+bestsellers |> # start with the data
+  filter(rank == 1, 
+         year >2021) |> # only include rows with a rank of 1 and a year over 2021
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 1) # only include rows with titles above 1
+```
+
+I'll find which authors have had the most No. 1 books in the last 5 years.
+
+David Baldacci is first with 10 number one books.
+
+```{r most-one-titles-last-five}
+bestsellers |> # start with the data
+  filter(rank == 1, 
+         year > 2018) |> # only include rows with a rank of 1 and a year over 2018
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 3) # only include rows with titles above 3
+```
+
+Now, I'll look at the last 10 years.
+
+Nora Roberts is first with 17 and David Baldacci is second with 15. 
+
+```{r most-one-titles-last-ten}
+bestsellers |> # start with the data
+  filter(rank == 1,
+         year > 2013) |> # only include rows with a rank of 1 and a year over 2013
+  distinct(author, title) |> # only include unique author/title combinations
+  group_by(author) |> # group by author
+  summarize(titles = n()) |> # count titles per author
+  arrange(desc(titles)) |> # arrange in descending order by titles
+  filter(titles > 7) # only include rows with titles above 7
+```

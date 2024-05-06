@@ -1,0 +1,9 @@
+"0","bestsellers |> # start with the data"
+"0","  group_by(author, title) |> # group by author and title"
+"0","  summarize(appearances = n()) |> # count number of appearances"
+"0","  arrange(desc(appearances)) |> # arrange in descending order"
+"0","  filter(appearances > 105) |> # only include rows with appearances greater than 105"
+"0","  write_csv(""data-processed/most-weeks.csv"") |> # save the data for data wrapper"
+"0","  print() # print it"
+"1","[38;5;254m`summarise()` has grouped output by 'author'. You can override using the `.groups` argument.[39m
+"

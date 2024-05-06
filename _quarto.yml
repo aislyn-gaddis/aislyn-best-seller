@@ -1,0 +1,23 @@
+project:
+  type: website
+
+website:
+  title: "New York Times Best Sellers Analysis"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - 01-cleaning.qmd
+      - 02-analysis.qmd
+      - 03-analysis.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    
+df-print: paged
+
+
+

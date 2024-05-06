@@ -1,0 +1,6 @@
+"0","bestsellers |> # start with the data"
+"0","  filter(year > 2021) |> # only include rows with a year over 2021"
+"0","  group_by(author) |> # group by author"
+"0","  summarize(appearances = n()) |> # count appearances per author"
+"0","  arrange(desc(appearances)) |> # arrange in descending order by appearances"
+"0","  filter(appearances > 25) # only include appearances above 25"

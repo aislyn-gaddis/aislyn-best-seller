@@ -1,0 +1,19 @@
+"0","bestsellers <- read_rds(""data-processed/bestsellers-combined.rds"") # saving the data into a new object"
+"0",""
+"0","glimpse(bestsellers) # glimpsing the data"
+"1","Rows: 9,975"
+"1",""
+"1","
+"
+"1","Columns: 5"
+"1",""
+"1","
+"
+"1","$ year   [3m[38;5;246m<dbl>[39m[23m 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 20…
+$ week   [3m[38;5;246m<date>[39m[23m 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2…
+$ rank   [3m[38;5;246m<dbl>[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7,…
+$ title  [3m[38;5;246m<chr>[39m[23m ""TICK TOCK"", ""THE GIRL WITH THE DRAGON TATTOO"", ""THE GIRL WHO PLAYED WITH FIRE"", ""THE GIRL WHO KICKED THE HORNET’S NEST"", …
+$ author [3m[38;5;246m<chr>[39m[23m ""James Patterson and Michael Ledwidge"", ""Stieg Larsson"", ""Stieg Larsson"", ""Stieg Larsson"", ""Sara Gruen"", ""John Grisham"", ""…"
+"1",""
+"1","
+"

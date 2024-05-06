@@ -1,0 +1,5 @@
+"0","bestsellers_full_clean |> write_rds(""data-processed/bestsellers-full.rds"")"
+"0","bestsellers_full_clean |> write_csv(""data-processed/bestsellers-full.csv"")"
+"0",""
+"0","bestsellers_combined_clean |> write_rds(""data-processed/bestsellers-combined.rds"")"
+"0","bestsellers_combined_clean |> write_csv(""data-processed/bestsellers-combined.csv"")"
