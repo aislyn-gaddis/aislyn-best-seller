@@ -1,8 +1,0 @@
-"0","bestsellers |> # start with the data"
-"0","  filter(rank == 1, "
-"0","         year > 2018) |> # only include rows with a rank of 1 and a year over 2018"
-"0","  distinct(author, title) |> # only include unique author/title combinations"
-"0","  group_by(author) |> # group by author"
-"0","  summarize(titles = n()) |> # count titles per author"
-"0","  arrange(desc(titles)) |> # arrange in descending order by titles"
-"0","  filter(titles > 3) # only include rows with titles above 3"

@@ -38,7 +38,7 @@ Now, I'm going to get the missing years of the hardcover fiction data by web scr
 
 ```{r web-scrape}
 start_date <- as.Date("2020-12-13")
-end_date <- as.Date("2024-05-12")
+end_date <- as.Date("2024-10-06")
 
 dates <- seq(start_date, end_date, by = "week")
 
@@ -76,11 +76,11 @@ bestsellers_two |> glimpse() # glimpsing the data
 
 ## Combined Print and E-book Web Scrape
 
-Now I'll do a similair web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. I also recommend commenting it after you finish running it. 
+Now I'll do a similar web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. I also recommend commenting it after you finish running it. 
 
 ```{r web-scrape-combined}
 start_date <- as.Date("2011-02-13")
-end_date <- as.Date("2023-11-05")
+end_date <- as.Date("2024-10-06")
 
 dates <- seq(start_date, end_date, by = "week")
 

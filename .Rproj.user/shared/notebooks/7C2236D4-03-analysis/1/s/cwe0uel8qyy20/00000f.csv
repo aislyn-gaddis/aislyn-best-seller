@@ -1,4 +1,0 @@
-"0","bestsellers |> # start with the data"
-"0","  filter(str_detect(title, ""WHERE THE CRAWDADS SING"")) |> # only include Where the Crawdads Sing"
-"0","  group_by(year) |> # group by year"
-"0","  summarize(appearance = n()) # count the number of appearances in each year"

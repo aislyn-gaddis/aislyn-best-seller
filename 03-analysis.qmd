@@ -53,7 +53,7 @@ bestsellers |>
 
 I'll use gsa to find what authors have had the most appearances on the list.
 
-Colleen Hoover blows everyone else out of the water with 415 total appearances. John Grisham comes in ssecond with 339, and David Baldacci comes in third with 240.
+Colleen Hoover blows everyone else out of the water with 448 total appearances. John Grisham comes in second with 355, and David Baldacci comes in third with 248.
 
 ```{r most-appearances}
 bestsellers_appearances <- bestsellers |> # saving the data into a new object
@@ -62,7 +62,7 @@ bestsellers_appearances <- bestsellers |> # saving the data into a new object
   arrange(desc(total_appearances)) # arrange in descending order by total_appearances
 
 bestsellers_appearances |> # start with the data
-   filter(total_appearances > 145) |> # only include rows with total_appearances over 145
+   filter(total_appearances > 152) |> # only include rows with total_appearances over 152
   write_csv("data-processed/most-appearances.csv") |> # save the data for data wrapper
   print() # print it
 ```
@@ -71,7 +71,7 @@ bestsellers_appearances |> # start with the data
 
 First, I'll find which authors have had the most appearances this year.
 
-Again, Colleen Hoover blows everyone else out of the water with more than triple 2nd place. She has 160 appearances to be exact.
+Again, Colleen Hoover blows everyone else out of the water with almost double 2nd place. She has 193 appearances to be exact.
 
 ```{r most-appearances-this-year}
 bestsellers |> # start with the data
@@ -79,12 +79,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 14) # only include appearances above 14
+  filter(appearances > 26) # only include appearances above 26
 ```
 
 I'll look at the past two years.
 
-Colleen Hoover again. More than triple second place with 367.
+Colleen Hoover again. More than triple second place with 400.
 
 ```{r most-appearances-two-year}
 bestsellers |> # start with the data
@@ -92,12 +92,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 22) # only include appearances above 22
+  filter(appearances > 45) # only include appearances above 45
 ```
 
 I'll look at the past five years.
 
-Colleen Hoover again, still with a large lead, but somewhat less than in the previous ones. She has 394.
+Colleen Hoover again, still with a large lead. She has 427.
 
 ```{r most-appearances-five-year}
 bestsellers |> # start with the data
@@ -105,12 +105,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 55) # only include appearances above 55
+  filter(appearances > 84) # only include appearances above 55
 ```
 
 I'll look at 10 years.
 
-This is crazy to me that Colleen Hoover still has the lead despite only becoming popular a few years ago. Note that she only has 6 appearances 2013-2017 and still takes the lead. She has 401 total appearances at this point.
+This is crazy to me that Colleen Hoover still has the lead despite only becoming popular a few years ago. Note that she only has 6 appearances 2013-2017 and still takes the lead. She has 434 total appearances at this point.
 
 ```{r most-appearances-ten-year}
 bestsellers |> # start with the data
@@ -118,12 +118,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 105) # only include appearances above 105
+  filter(appearances > 109) # only include appearances above 109
 ```
 
 ## What authors have had the most No. 1 appearances?
 
-It's John Grisham with 47, though Delia Owens comes close with 44. Colleen Hoover takes third with 33.
+It's John Grisham with 48, though Delia Owens comes close with 44. Colleen Hoover takes third with 38.
 
 ```{r most-one-appearances}
 bestsellers |> # start with the data
@@ -131,14 +131,14 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 15) # only include appearances above 15
+  filter(appearances > 15) # only include appearances above 16
 ```
 
 ## What author has had the most No. 1 appearances this year? last 2 years? 5 years? 10 years?
 
 I'll look at this year first.
 
-It's Colleen Hoover with 14.
+It's Colleen Hoover with 19.
 
 ```{r most-one-appearances-this-year}
 bestsellers |> # start with the data
@@ -152,7 +152,7 @@ bestsellers |> # start with the data
 
 Now two years.
 
-It's Colleen Hoover with 33.
+It's Colleen Hoover with 38.
 
 ```{r most-one-appearances-two-years}
 bestsellers |> # start with the data
@@ -166,7 +166,7 @@ bestsellers |> # start with the data
 
 5 years?
 
-First thing Colleen Hoover has not won. Delia Owens takes it with 44, most likely with Where the Crawdads Sing. Colleen Hoover comes in second with 33.
+First thing Colleen Hoover has not won. Delia Owens takes it with 44, most likely with Where the Crawdads Sing. Colleen Hoover comes in second with 38.
 
 ```{r most-one-appearances-five-years}
 bestsellers |> # start with the data
@@ -180,7 +180,7 @@ bestsellers |> # start with the data
 
 And finally, 10 years?
 
-Also Delia Owens with 44 for Where the Crawdads Sing, but closely followed by John Grisham at 40.
+Also Delia Owens with 44 for Where the Crawdads Sing, but closely followed by John Grisham at 41.
 
 ```{r most-one-appearances-ten-years}
 bestsellers |> # start with the data
@@ -189,12 +189,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(appearances = n()) |> # count appearances per author
   arrange(desc(appearances)) |> # arrange in descending order by appearances
-  filter(appearances > 10) # only include appearances above 10
+  filter(appearances > 12) # only include appearances above 12
 ```
 
 ## What authors have had the most books on the list?
 
-Danielle Steel has had the most with 68 books on the list. Christine Feehan comes in second with 54. Stuart Woods takes third with 44. 
+Danielle Steel has had the most with 74 books on the list. Christine Feehan comes in second with 56. Stuart Woods takes third with 44. 
 
 ```{r most-books}
 bestsellers |> # start with the data
@@ -202,14 +202,14 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 21) # only include titles above 21
+  filter(titles > 22) # only include titles above 22
 ```
 
 ## What author has had the most books on the list in the last year? 2 years? 5 years? 10 years?
 
 I'll start with this year.
 
-It's Colleen Hoover with 7.
+It's Danielle Steel with 12.
 
 ```{r most-books-this-year}
 bestsellers |> # start with the data
@@ -218,12 +218,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 1) # only include titles above 1
+  filter(titles > 3) # only include titles above 3
 ```
 
 I'll look at two years.
 
-It's Danielle Steel with 13 Colleen Hoover in a close second with 11.
+It's Danielle Steel with 19. Colleen Hoover is in second with 11.
 
 ```{r most-books-two-years}
 bestsellers |> # start with the data
@@ -232,12 +232,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 3) # only include titles above 3
+  filter(titles > 4) # only include titles above 4
 ```
 
 I'll look at the last 5 years.
 
-It's Danielle Steel again with 34.
+It's Danielle Steel again with 40.
 
 ```{r most-books-last-five}
 bestsellers |> # start with the data
@@ -246,12 +246,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 9) # only include titles above 9
+  filter(titles > 10) # only include titles above 10
 ```
 
 Now, I'll look at the last 10 years.
 
-It's also Danielle Steel with 59.
+It's also Danielle Steel with 65.
 
 ```{r most-ones-last-ten}
 bestsellers |> # start with the data
@@ -260,7 +260,7 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 17) # only include titles above 17
+  filter(titles > 18) # only include titles above 18
 ```
 
 
@@ -268,7 +268,7 @@ bestsellers |> # start with the data
 
 I'll use gsa again to find which books have been on the list for the most number of weeks.
 
-Delia Owens wins with 193 appearances for Where the Crawdads Sing. Gillian Flynn comes in second with 122 for Where the Crawdads Sing. Colleen Hoover is the only person with 2 books in the top 10 and takes third with 117.
+Delia Owens wins with 193 appearances for Where the Crawdads Sing. Colleen Hoover is the only person with 2 books in the top 10 and takes second with 139. Gillian Flynn comes in third with 122 for Where the Crawdads Sing.
 
 ```{r most-weeks}
 bestsellers |> # start with the data
@@ -292,8 +292,8 @@ bestsellers |> # start with the data
   group_by(author, title) |> # group by author and title
   summarize(appearances = n()) |> # count number of appearances
   arrange(desc(appearances)) |> # arrange in descending order
-  filter(appearances > 6) |> # only include rows with appearances greater than 6
-  write_csv("data-processed/most-one-weeks.csv") |> # save the data for data wrapepr
+  filter(appearances > 7) |> # only include rows with appearances greater than 7
+  write_csv("data-processed/most-one-weeks.csv") |> # save the data for data wrapper
   print() # print it
 ```
 
@@ -348,7 +348,7 @@ bestsellers |> # start with the data
 
 I'll start with 2 years.
 
-Colleen Hoover and John Sandford are tied for first with 4 No. 1 books.
+John Sandford takes first with 5 No. 1 books.
 
 ```{r most-one-titles-last-two}
 bestsellers |> # start with the data
@@ -358,12 +358,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 1) # only include rows with titles above 1
+  filter(titles > 2) # only include rows with titles above 2
 ```
 
 I'll find which authors have had the most No. 1 books in the last 5 years.
 
-David Baldacci is first with 10 number one books.
+David Baldacci is first with 11 No. 1 books.
 
 ```{r most-one-titles-last-five}
 bestsellers |> # start with the data
@@ -373,12 +373,12 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 3) # only include rows with titles above 3
+  filter(titles > 4) # only include rows with titles above 4
 ```
 
 Now, I'll look at the last 10 years.
 
-Nora Roberts is first with 17 and David Baldacci is second with 15. 
+Nora Roberts is first with 17 and David Baldacci is second with 16. 
 
 ```{r most-one-titles-last-ten}
 bestsellers |> # start with the data
@@ -388,5 +388,5 @@ bestsellers |> # start with the data
   group_by(author) |> # group by author
   summarize(titles = n()) |> # count titles per author
   arrange(desc(titles)) |> # arrange in descending order by titles
-  filter(titles > 7) # only include rows with titles above 7
+  filter(titles > 8) # only include rows with titles above 8
 ```
