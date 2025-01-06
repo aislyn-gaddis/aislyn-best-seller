@@ -141,10 +141,9 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>I’m Aislyn Gaddis, a senior journalism student at the University of Texas at Austin.</p>
-<p>This is just a simple Quarto website for my New York Times Best Sellers List data analysis. I first started this for my Reporting with Data class project in Spring 2023, but I’ve been working on it off and on since to improve and expand it.</p>
-<p>Each tab on the navigation bar is an R Notebook.</p>
+<p>This is just a simple Quarto website for my New York Times Best Sellers List data analysis. I first started this for my Reporting with Data class project in spring 2023, but I’ve been working on it off-and-on since then to improve and expand it.</p>
 <p>The GitHub repository for this project is <a href="https://github.com/aislyn-gaddis/aislyn-best-seller">here</a>.</p>
-<p>You can read the accompanying story <a href="https://static.mywebsites360.com/e8130fd5fa4645eaa352da517a890d4e/r/cf8f367cecc54b0e934b010989d989d3/1/Best%20Sellers%20Final.pdf">here</a>. (Note: I analyzed the Combined Print and E-book Fiction List and did some more analysis on the Hardcover Fiction List after I wrote this story.)</p>
+<p>You can read the accompanying story <a href="https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/">here</a>. (Note: I analyzed the Combined Print and E-book Fiction List and did some more analysis on the Hardcover Fiction List after I wrote this story.)</p>
 
 
 
@@ -241,7 +240,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/aislyn-gaddis\.quarto\.pub\/new-york-time-best-sellers");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

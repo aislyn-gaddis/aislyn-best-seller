@@ -3,7 +3,7 @@
 "0","bestsellers_two |> write_csv(""data-raw/bestsellers-web-scrape.csv"") # saving the object into a csv to be able to upload it to google sheets"
 "0",""
 "0","bestsellers_two |> glimpse() # glimpsing the data"
-"1","Rows: 2,685"
+"1","Rows: 3,060"
 "1",""
 "1","
 "
@@ -11,10 +11,10 @@
 "1",""
 "1","
 "
-"1","$ title  [3m[38;5;246m<chr>[39m[23m ""READY PLAYER TWO"", ""DEADLY CROSS"", ""THE RETURN"", ""A TIME FOR MERCY"", ""DAYLIGHT"", ""THE AWAKENING"", ""THE LAW OF INNOCENCE"",…
-$ author [3m[38;5;246m<chr>[39m[23m ""by Ernest Cline"", ""by James Patterson"", ""by Nicholas Sparks"", ""by John Grisham"", ""by David Baldacci"", ""by Nora Roberts"", …
-$ rank   [3m[38;5;246m<int>[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7,…
-$ date   [3m[38;5;246m<date>[39m[23m 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2…"
+"1","$ title  [3m[38;5;246m<chr>[39m[23m ""READY PLAYER TWO"", ""DEADLY CROSS"", ""THE RETURN"", ""A TIME FOR MERCY"", ""DAYLIGHT"", ""THE AWAKENING"", ""THE LAW OF I…
+$ author [3m[38;5;246m<chr>[39m[23m ""by Ernest Cline"", ""by James Patterson"", ""by Nicholas Sparks"", ""by John Grisham"", ""by David Baldacci"", ""by Nora …
+$ rank   [3m[38;5;246m<int>[39m[23m 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3, 4…
+$ date   [3m[38;5;246m<date>[39m[23m 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 2020-12-13, 202…"
 "1",""
 "1","
 "

@@ -38,7 +38,7 @@ Now, I'm going to get the missing years of the hardcover fiction data by web scr
 
 ```{r web-scrape}
 start_date <- as.Date("2020-12-13")
-end_date <- as.Date("2024-10-06")
+end_date <- as.Date("2024-11-03")
 
 dates <- seq(start_date, end_date, by = "week")
 
@@ -80,7 +80,7 @@ Now I'll do a similar web scrape to get the combined print and ebook list. This 
 
 ```{r web-scrape-combined}
 start_date <- as.Date("2011-02-13")
-end_date <- as.Date("2024-10-06")
+end_date <- as.Date("2024-11-03")
 
 dates <- seq(start_date, end_date, by = "week")
 
@@ -207,8 +207,8 @@ It looks like everything parsed correctly in the combined list data, so I don't 
 I'll export the data to my computer as an rds and as a csv
 
 ```{r export}
-bestsellers_full_clean |> write_rds("data-processed/bestsellers-full.rds")
-bestsellers_full_clean |> write_csv("data-processed/bestsellers-full.csv")
+bestsellers_full_clean |> write_rds("data-processed/bestsellers-hardcover.rds")
+bestsellers_full_clean |> write_csv("data-processed/bestsellers-hardcover.csv")
 
 bestsellers_combined_clean |> write_rds("data-processed/bestsellers-combined.rds")
 bestsellers_combined_clean |> write_csv("data-processed/bestsellers-combined.csv")

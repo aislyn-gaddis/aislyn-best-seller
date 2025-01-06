@@ -9,7 +9,5 @@
 "0","  mutate(author = str_remove_all(author, ""by "")) |> # removing the by"
 "0","  mutate(author = str_remove_all(author, ""\\(.*"")) |> # removing the publisher information using the ()"
 "0","  mutate(author = str_sub(author, end = -3))# removing the period and spaces by removing the last 3 characters of the column"
-"2","Warning:"
-"2"," [38;5;254mExpected 2 pieces. Additional pieces discarded in 7 rows [1, 2, 3, 4, 5, 6, 7].[39m
-"
+"2","Warning: Expected 2 pieces. Additional pieces discarded in 7 rows [1, 2, 3, 4, 5, 6, 7]."
 "0","bestsellers_na_clean"
