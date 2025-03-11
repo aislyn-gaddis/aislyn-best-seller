@@ -205,9 +205,51 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "New York Times Best Sellers Data",
+    "title": "New York Times Best Seller Analysis",
     "section": "",
-    "text": "I’m Aislyn Gaddis, a senior journalism student at the University of Texas at Austin.\nThis project scrapes two New York Times Best Seller lists: the hardcover fiction list and the combined print and e-book fiction list. It then cleans the data and does some basic analysis.\nThe hardcover fiction web scrape is combined with data from the Post 45 Collective and goes back to 1931 when the list started.\nThe combined print and e-book fiction list is just the web scrape and goes back to 2011 when that list started.\nThere are also two GitHub actions set up on this project’s repository to run the web scrape every week and update the data files when the new list is published.\nThis project was first started as a class project in spring 2023 for Reporting with Data with Professor Christian McDonald at The University of Texas at Austin, but I have worked on expanding and improving the project since then.\nHere is the original class story I wrote on this project.\nHere is a podcast I made on it as part of the UT Media Innovation Group."
+    "text": "This project provides a comprehensive analysis of the New York Times Best Seller lists, tracking trends and patterns in bestselling fiction books over time. The analysis focuses on two primary lists:\n\nHardcover Fiction (1931-present)\nCombined Print & E-Book Fiction (2011-present)\n\n\n\n\nHow has the NYT bestseller list evolved over time?\nWhich authors and titles have dominated the lists?\nWhat patterns can we observe in bestseller performance?\nHow do hardcover bestsellers compare to e-book inclusive listings?"
+  },
+  {
+    "objectID": "index.html#project-overview",
+    "href": "index.html#project-overview",
+    "title": "New York Times Best Seller Analysis",
+    "section": "",
+    "text": "This project provides a comprehensive analysis of the New York Times Best Seller lists, tracking trends and patterns in bestselling fiction books over time. The analysis focuses on two primary lists:\n\nHardcover Fiction (1931-present)\nCombined Print & E-Book Fiction (2011-present)\n\n\n\n\nHow has the NYT bestseller list evolved over time?\nWhich authors and titles have dominated the lists?\nWhat patterns can we observe in bestseller performance?\nHow do hardcover bestsellers compare to e-book inclusive listings?"
+  },
+  {
+    "objectID": "index.html#data-collection",
+    "href": "index.html#data-collection",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Data Collection",
+    "text": "Data Collection\n\nData Sources\nThis project combines data from multiple sources:\n\nWeb Scraping: Current bestseller data collected directly from the New York Times website\nHistorical Archives: Hardcover fiction data (1931-2010) from the Post 45 Collective\n\n\n\nAutomated Updates\nThe dataset is automatically refreshed weekly through GitHub Actions workflows, ensuring the analysis remains current with the latest bestseller information."
+  },
+  {
+    "objectID": "index.html#project-navigation",
+    "href": "index.html#project-navigation",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Project Navigation",
+    "text": "Project Navigation\nThis website contains four main analysis sections:\n\nHardcover Fiction Data Cleaning - Methodology for preparing the hardcover fiction dataset\nCombined List Data Cleaning - Methodology for preparing the combined print and e-book dataset\nHardcover Fiction Analysis - Findings and visualizations from the hardcover fiction dataset\nCombined List Analysis - Findings and visualizations from the combined print and e-book dataset"
+  },
+  {
+    "objectID": "index.html#related-publications",
+    "href": "index.html#related-publications",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Related Publications",
+    "text": "Related Publications\nThis research has been featured in:\n\nWhat Books Top the New York Times Best Sellers List and Why? - Article exploring key findings\nData Dives: Investigating the NYT Bestseller Lists - Podcast discussion of the research methodology and results"
+  },
+  {
+    "objectID": "index.html#about-the-author",
+    "href": "index.html#about-the-author",
+    "title": "New York Times Best Seller Analysis",
+    "section": "About the Author",
+    "text": "About the Author\nThis project is maintained by Aislyn Gaddis, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project at The University of Texas at Austin and has evolved into an ongoing project."
+  },
+  {
+    "objectID": "index.html#repository",
+    "href": "index.html#repository",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Repository",
+    "text": "Repository\nThe complete code and data for this project are available on GitHub."
   },
   {
     "objectID": "04-analysis-combined.html",

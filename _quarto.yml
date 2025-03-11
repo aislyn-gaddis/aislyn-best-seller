@@ -4,9 +4,8 @@ project:
 website:
   title: "NYT Best Sellers Data"
   navbar:
+    title: "NYT Best Sellers Data"
     left:
-      - href: index.qmd
-        text: Home
       - 01-cleaning-hardcover.qmd
       - 02-cleaning-combined.qmd
       - 03-analysis-hardcover.qmd

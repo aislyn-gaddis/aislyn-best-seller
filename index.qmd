@@ -1,59 +1,60 @@
 ---
 title: "New York Times Best Seller Analysis"
-output: 
-  html_document:
+format:
+  html:
     theme: cosmo
     toc: true
-    toc_float: true
+    page-layout: full
 ---
-
-# NYT Best Seller Analysis
-
-![NYT Best Sellers](https://raw.githubusercontent.com/aislyn-gaddis/aislyn-best-seller/main/images/nyt-bestseller-banner.png)
 
 ## Project Overview
 
-This project scrapes, cleans, and analyzes data from two **New York Times Best Seller** lists:
-- Hardcover Fiction List (1931-present)
-- Combined Print & E-Book Fiction List (2011-present)
+This project provides a comprehensive analysis of the **New York Times Best Seller** lists, tracking trends and patterns in bestselling fiction books over time. The analysis focuses on two primary lists:
+
+- **Hardcover Fiction** (1931-present)
+- **Combined Print & E-Book Fiction** (2011-present)
+
+### Key Research Questions
+
+- How has the NYT bestseller list evolved over time?
+- Which authors and titles have dominated the lists?
+- What patterns can we observe in bestseller performance?
+- How do hardcover bestsellers compare to e-book inclusive listings?
+
+## Data Collection
 
 ### Data Sources
 
-- **Hardcover Fiction**: Web scrape merged with historical data from the [Post 45 Collective](https://data.post45.org/posts/nyt_hardcover_fiction_bestsellers/)
-- **Combined Print & E-Book Fiction**: Web scrape from the [NYT Best Sellers site](https://www.nytimes.com/books/best-sellers/)
+This project combines data from multiple sources:
 
-## Features
+- **Web Scraping**: Current bestseller data collected directly from the [New York Times website](https://www.nytimes.com/books/best-sellers/)
+- **Historical Archives**: Hardcover fiction data (1931-2010) from the [Post 45 Collective](https://data.post45.org/posts/nyt_hardcover_fiction_bestsellers/)
 
-- **Automated Data Collection**: GitHub Actions automatically scrape the NYT Best Seller lists weekly
-- **Historical Analysis**: Explores trends across 90+ years of bestseller data
-- **Interactive Website**: Results viewable on a [Quarto website](https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers/)
+### Automated Updates
 
-## Getting Started
+The dataset is automatically refreshed weekly through GitHub Actions workflows, ensuring the analysis remains current with the latest bestseller information.
 
-To run this project:
+## Project Navigation
 
-1. Clone this repository
-2. Execute the Quarto files in numerical order:
-   - `01-cleaning-hardcover.qmd` - Data cleaning for hardcover fiction
-   - `02-cleaning-combined.qmd` - Data cleaning for combined list
-   - `03-analysis-hardcover.qmd` - Analysis of hardcover fiction
-   - `04-analysis-combined.qmd` - Analysis of combined list
+This website contains four main analysis sections:
 
-## Project History
+1. [**Hardcover Fiction Data Cleaning**](01-cleaning-hardcover.qmd) - Methodology for preparing the hardcover fiction dataset
+2. [**Combined List Data Cleaning**](02-cleaning-combined.qmd) - Methodology for preparing the combined print and e-book dataset
+3. [**Hardcover Fiction Analysis**](03-analysis-hardcover.qmd) - Findings and visualizations from the hardcover fiction dataset
+4. [**Combined List Analysis**](04-analysis-combined.qmd) - Findings and visualizations from the combined print and e-book dataset
 
-This project began as a class assignment for "Reporting with Data" with Professor Christian McDonald at The University of Texas at Austin (Spring 2023) and has been continuously improved since.
+## Related Publications
 
-## Media Coverage & Related Work
+This research has been featured in:
 
-- [Original Class Story](https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/)
-- [Data Dive Podcast](https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/) (UT Media Innovation Group)
-- [Project Website](https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers/)
+- [What Books Top the New York Times Best Sellers List and Why?](https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/) - Article exploring key findings
+- [Data Dives: Investigating the NYT Bestseller Lists](https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/) - Podcast discussion of the research methodology and results
+
+## About the Author
+
+This project is maintained by **Aislyn Gaddis**, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project at The University of Texas at Austin and has evolved into an ongoing project.
 
 ## Repository
 
-- GitHub: [aislyn-gaddis/aislyn-best-seller](https://github.com/aislyn-gaddis/aislyn-best-seller)
+The complete code and data for this project are available on [GitHub](https://github.com/aislyn-gaddis/aislyn-best-seller).
 
-## Author
-
-**Aislyn Gaddis**
-- Website: [aislyngaddis.com](https://aislyngaddis.com)

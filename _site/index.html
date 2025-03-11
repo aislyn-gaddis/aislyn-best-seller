@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>New York Times Best Sellers Data – NYT Best Sellers Data</title>
+<title>New York Times Best Seller Analysis – NYT Best Sellers Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -89,10 +89,6 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="./01-cleaning-hardcover.html"> 
 <span class="menu-text">Hardcover Web Scrape</span></a>
   </li>  
@@ -116,26 +112,44 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link active" data-scroll-target="#project-overview">Project Overview</a>
+  <ul class="collapse">
+  <li><a href="#key-research-questions" id="toc-key-research-questions" class="nav-link" data-scroll-target="#key-research-questions">Key Research Questions</a></li>
+  </ul></li>
+  <li><a href="#data-collection" id="toc-data-collection" class="nav-link" data-scroll-target="#data-collection">Data Collection</a>
+  <ul class="collapse">
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link" data-scroll-target="#data-sources">Data Sources</a></li>
+  <li><a href="#automated-updates" id="toc-automated-updates" class="nav-link" data-scroll-target="#automated-updates">Automated Updates</a></li>
+  </ul></li>
+  <li><a href="#project-navigation" id="toc-project-navigation" class="nav-link" data-scroll-target="#project-navigation">Project Navigation</a></li>
+  <li><a href="#related-publications" id="toc-related-publications" class="nav-link" data-scroll-target="#related-publications">Related Publications</a></li>
+  <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
+  <li><a href="#repository" id="toc-repository" class="nav-link" data-scroll-target="#repository">Repository</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">New York Times Best Sellers Data</h1>
+<h1 class="title">New York Times Best Seller Analysis</h1>
 </div>
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-page-right">
 
     
   
@@ -147,16 +161,66 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>I’m Aislyn Gaddis, a senior journalism student at the University of Texas at Austin.</p>
-<p>This project scrapes two <a href="https://www.nytimes.com/books/best-sellers/">New York Times Best Seller</a> lists: the hardcover fiction list and the combined print and e-book fiction list. It then cleans the data and does some basic analysis.</p>
-<p>The hardcover fiction web scrape is combined with data from the <a href="https://data.post45.org/posts/nyt_hardcover_fiction_bestsellers/">Post 45 Collective</a> and goes back to 1931 when the list started.</p>
-<p>The combined print and e-book fiction list is just the web scrape and goes back to 2011 when that list started.</p>
-<p>There are also two GitHub actions set up on <a href="https://github.com/aislyn-gaddis/aislyn-best-seller">this project’s repository</a> to run the web scrape every week and update the data files when the new list is published.</p>
-<p>This project was first started as a class project in spring 2023 for Reporting with Data with Professor Christian McDonald at The University of Texas at Austin, but I have worked on expanding and improving the project since then.</p>
-<p><a href="https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/">Here</a> is the original class story I wrote on this project.</p>
-<p><a href="https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/">Here</a> is a podcast I made on it as part of the <a href="https://journalism.utexas.edu/innovation/media-innovation-group-data-fellows">UT Media Innovation Group</a>.</p>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p>This project provides a comprehensive analysis of the <strong>New York Times Best Seller</strong> lists, tracking trends and patterns in bestselling fiction books over time. The analysis focuses on two primary lists:</p>
+<ul>
+<li><strong>Hardcover Fiction</strong> (1931-present)</li>
+<li><strong>Combined Print &amp; E-Book Fiction</strong> (2011-present)</li>
+</ul>
+<section id="key-research-questions" class="level3">
+<h3 class="anchored" data-anchor-id="key-research-questions">Key Research Questions</h3>
+<ul>
+<li>How has the NYT bestseller list evolved over time?</li>
+<li>Which authors and titles have dominated the lists?</li>
+<li>What patterns can we observe in bestseller performance?</li>
+<li>How do hardcover bestsellers compare to e-book inclusive listings?</li>
+</ul>
+</section>
+</section>
+<section id="data-collection" class="level2">
+<h2 class="anchored" data-anchor-id="data-collection">Data Collection</h2>
+<section id="data-sources" class="level3">
+<h3 class="anchored" data-anchor-id="data-sources">Data Sources</h3>
+<p>This project combines data from multiple sources:</p>
+<ul>
+<li><strong>Web Scraping</strong>: Current bestseller data collected directly from the <a href="https://www.nytimes.com/books/best-sellers/">New York Times website</a></li>
+<li><strong>Historical Archives</strong>: Hardcover fiction data (1931-2010) from the <a href="https://data.post45.org/posts/nyt_hardcover_fiction_bestsellers/">Post 45 Collective</a></li>
+</ul>
+</section>
+<section id="automated-updates" class="level3">
+<h3 class="anchored" data-anchor-id="automated-updates">Automated Updates</h3>
+<p>The dataset is automatically refreshed weekly through GitHub Actions workflows, ensuring the analysis remains current with the latest bestseller information.</p>
+</section>
+</section>
+<section id="project-navigation" class="level2">
+<h2 class="anchored" data-anchor-id="project-navigation">Project Navigation</h2>
+<p>This website contains four main analysis sections:</p>
+<ol type="1">
+<li><a href="./01-cleaning-hardcover.html"><strong>Hardcover Fiction Data Cleaning</strong></a> - Methodology for preparing the hardcover fiction dataset</li>
+<li><a href="./02-cleaning-combined.html"><strong>Combined List Data Cleaning</strong></a> - Methodology for preparing the combined print and e-book dataset</li>
+<li><a href="./03-analysis-hardcover.html"><strong>Hardcover Fiction Analysis</strong></a> - Findings and visualizations from the hardcover fiction dataset</li>
+<li><a href="./04-analysis-combined.html"><strong>Combined List Analysis</strong></a> - Findings and visualizations from the combined print and e-book dataset</li>
+</ol>
+</section>
+<section id="related-publications" class="level2">
+<h2 class="anchored" data-anchor-id="related-publications">Related Publications</h2>
+<p>This research has been featured in:</p>
+<ul>
+<li><a href="https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/">What Books Top the New York Times Best Sellers List and Why?</a> - Article exploring key findings</li>
+<li><a href="https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/">Data Dives: Investigating the NYT Bestseller Lists</a> - Podcast discussion of the research methodology and results</li>
+</ul>
+</section>
+<section id="about-the-author" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-author">About the Author</h2>
+<p>This project is maintained by <strong>Aislyn Gaddis</strong>, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project at The University of Texas at Austin and has evolved into an ongoing project.</p>
+</section>
+<section id="repository" class="level2">
+<h2 class="anchored" data-anchor-id="repository">Repository</h2>
+<p>The complete code and data for this project are available on <a href="https://github.com/aislyn-gaddis/aislyn-best-seller">GitHub</a>.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
