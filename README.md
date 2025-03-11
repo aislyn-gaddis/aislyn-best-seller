@@ -1,15 +1,4 @@
----
-title: "New York Times Best Seller Analysis"
-output: 
-  html_document:
-    theme: cosmo
-    toc: true
-    toc_float: true
----
-
-# NYT Best Seller Analysis
-
-![NYT Best Sellers](https://raw.githubusercontent.com/aislyn-gaddis/aislyn-best-seller/main/images/nyt-bestseller-banner.png)
+# New York Times Best Seller Analysis
 
 ## Project Overview
 
