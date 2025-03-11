@@ -1,14 +1,17 @@
 ---
-title: "New York Times Best Sellers Data"
+title: "README"
+output: html_document
 ---
 
-I'm Aislyn Gaddis, a senior journalism student at the University of Texas at Austin.
+## New York Times Best Seller Web Scrapes and Analysis
 
-This project scrapes two [New York Times Best Seller](https://www.nytimes.com/books/best-sellers/) lists: the hardcover fiction list and the combined print and e-book fiction list. It then cleans the data and does some basic analysis. 
+This project is by Aislyn Gaddis and scrapes two [New York Times Best Seller](https://www.nytimes.com/books/best-sellers/) lists: the hardcover fiction list and the combined print and e-book fiction list. It then cleans the data and does some basic analysis. 
 
 The hardcover fiction web scrape is combined with data from the [Post 45 Collective](https://data.post45.org/posts/nyt_hardcover_fiction_bestsellers/) and goes back to 1931 when the list started.
 
 The combined print and e-book fiction list is just the web scrape and goes back to 2011 when that list started. 
+
+To run the scrape, cleaning and analysis, start with the quarto file starting with "01" and continue to "02" and so on.
 
 There are also two GitHub actions set up on [this project's repository](https://github.com/aislyn-gaddis/aislyn-best-seller) to run the web scrape every week and update the data files when the new list is published. 
 
@@ -17,3 +20,10 @@ This project was first started as a class project in spring 2023 for Reporting w
 [Here](https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/) is the original class story I wrote on this project.
 
 [Here](https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/) is a podcast I made on it as part of the [UT Media Innovation Group](https://journalism.utexas.edu/innovation/media-innovation-group-data-fellows).
+
+[Here](https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers/) is the quarto website for this project.
+
+
+
+
+
