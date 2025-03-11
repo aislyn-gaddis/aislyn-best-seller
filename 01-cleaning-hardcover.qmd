@@ -1,5 +1,5 @@
 ---
-title: "Hardcover Fiction List Web Scrape and Cleaning"
+title: "Hardcover Web Scrape"
 ---
 
 ## Goals of the notebook

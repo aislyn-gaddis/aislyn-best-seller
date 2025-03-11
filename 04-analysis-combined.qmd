@@ -1,5 +1,5 @@
 ---
-title: "Combined Print and E-Book Fiction Analysis"
+title: "Combined Print and E-Book Analysis"
 ---
 
 ## Goals of the notebook

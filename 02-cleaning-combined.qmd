@@ -1,5 +1,5 @@
 ---
-title: "Combined Print and E-Book Fiction List Web Scrape and Cleaning"
+title: "Combined Print and E-Book Web Scrape"
 ---
 
 ## Goals of the notebook

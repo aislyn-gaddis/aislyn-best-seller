@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>New York Times Best Sellers Data – NYT Best Sellers Data</title>
+<title>Combined Print and E-Book Web Scrape – NYT Best Sellers Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -66,6 +100,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -89,7 +125,7 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="./index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
@@ -97,7 +133,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Hardcover Web Scrape</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./02-cleaning-combined.html"> 
+    <a class="nav-link active" href="./02-cleaning-combined.html" aria-current="page"> 
 <span class="menu-text">Combined Print and E-Book Web Scrape</span></a>
   </li>  
   <li class="nav-item">
@@ -119,7 +155,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#goals-of-the-notebook" id="toc-goals-of-the-notebook" class="nav-link active" data-scroll-target="#goals-of-the-notebook">Goals of the notebook</a></li>
+  <li><a href="#combined-print-and-e-book-web-scrape" id="toc-combined-print-and-e-book-web-scrape" class="nav-link" data-scroll-target="#combined-print-and-e-book-web-scrape">Combined Print and E-book Web Scrape</a></li>
+  <li><a href="#exporting-the-data" id="toc-exporting-the-data" class="nav-link" data-scroll-target="#exporting-the-data">Exporting the data</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
@@ -130,7 +174,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">New York Times Best Sellers Data</h1>
+<h1 class="title">Combined Print and E-Book Web Scrape</h1>
 </div>
 
 
@@ -147,13 +191,157 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>I’m Aislyn Gaddis, a senior journalism student at the University of Texas at Austin.</p>
-<p>This is just a simple Quarto website for my New York Times Best Sellers List data analysis. I first started this for my Reporting with Data class project in spring 2023, but I’ve been working on it off-and-on since then to improve and expand it.</p>
-<p>The GitHub repository for this project is <a href="https://github.com/aislyn-gaddis/aislyn-best-seller">here</a>.</p>
-<p>I also recently implemented a GitHub Action to automatically scrape the lists each week and update the respective files.</p>
-<p>You can read the accompanying story <a href="https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/">here</a>. (Note: I analyzed the Combined Print and E-book Fiction List and did some more analysis on the Hardcover Fiction List after I wrote this story.)</p>
+<section id="goals-of-the-notebook" class="level2">
+<h2 class="anchored" data-anchor-id="goals-of-the-notebook">Goals of the notebook</h2>
+<p>In this notebook, I’m going to</p>
+<ul>
+<li>web scrape the NYT Combined Print and E-Book Fiction List</li>
+<li>clean the data</li>
+<li>save the data</li>
+</ul>
+<p>I’ll load any libraries I might need.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ purrr     1.0.2
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'janitor'
+
+The following objects are masked from 'package:stats':
+
+    chisq.test, fisher.test</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'rvest'
+
+The following object is masked from 'package:readr':
+
+    guess_encoding</code></pre>
+</div>
+</div>
+</section>
+<section id="combined-print-and-e-book-web-scrape" class="level2">
+<h2 class="anchored" data-anchor-id="combined-print-and-e-book-web-scrape">Combined Print and E-book Web Scrape</h2>
+<p>Now I’ll do a similar web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. It will take quite a while to run. I also recommend commenting it after you finish running it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># start_date &lt;- as.Date("2011-02-13")</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># current_date = Sys.Date()</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># day_of_week = wday(current_date)</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># # note: the list for the following week is published on Wednesdays at 7pm EST</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># if (day_of_week == 1) {</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   end_date = current_date + 7</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># } else if (day_of_week &gt;= 2 &amp; day_of_week &lt;= 4) {</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   days_until_sunday = 8 - day_of_week</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   end_date = current_date + days_until_sunday # end_date is equal to the sunday after the current_date</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># } else if (day_of_week &gt;= 5 &amp; day_of_week &lt;= 7) {</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   days_until_sunday = 8 - day_of_week</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   end_date = current_date + days_until_sunday + 7 # end_date is equal to 2 sundays after the current_date</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="co"># dates &lt;- seq(start_date, end_date, by = "week")</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a><span class="co"># # Create output directory if it doesn't exist</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># output_dir &lt;- "data-raw/bestsellers-combined-weeks"</span></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># # Function to scrape and save data for each date</span></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="co"># map(dates, function(date) {</span></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co">#   url &lt;- sprintf("https://www.nytimes.com/books/best-sellers/%s/combined-print-and-e-book-fiction/", format(date, "%Y/%m/%d"))</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a><span class="co">#   page &lt;- read_html(url)</span></span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a><span class="co">#   titles &lt;- page %&gt;% html_nodes(".css-2jegzb") %&gt;% html_text()</span></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="co">#   authors &lt;- page %&gt;% html_nodes(".css-1aaqvca") %&gt;% html_text()</span></span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a><span class="co">#   publishers &lt;- page %&gt;% html_nodes(".css-1w6oav3") %&gt;% html_text()</span></span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a><span class="co">#   descriptions &lt;- page %&gt;% html_nodes(".css-17af87k") %&gt;% html_text()</span></span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   ranks &lt;- seq_along(titles)</span></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="co">#   df = data.frame(title = titles, author = authors, rank = ranks, date = date, publisher = publishers, description = descriptions)</span></span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a><span class="co">#   # Save each week's data as an RDS file</span></span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a><span class="co">#   file_path &lt;- file.path(output_dir, paste0("bestsellers-combined-", date, ".rds"))</span></span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a><span class="co">#   write_rds(df, file_path)</span></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a><span class="co">#   </span></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co">#   #print(date) # for status</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a><span class="co"># })</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now I’ll combine all the weeks files into one file.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>file_list <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">"data-raw/bestsellers-combined-weeks"</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dfs <span class="ot">&lt;-</span> <span class="fu">map_dfr</span>(file_list, read_rds)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(dfs, <span class="st">"data-raw/bestsellers-combined-all-weeks.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I’ll save the new file into a new object and glimpse it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>bestsellers_combined <span class="ot">&lt;-</span> <span class="fu">read_rds</span>(<span class="st">"data-raw/bestsellers-combined-all-weeks.rds"</span>) <span class="co"># creating a new object with a file </span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>bestsellers_combined <span class="sc">|&gt;</span> <span class="fu">glimpse</span>() <span class="co"># glimpsing the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 11,040
+Columns: 6
+$ title       &lt;chr&gt; "TICK TOCK", "THE GIRL WITH THE DRAGON TATTOO", "THE GIRL …
+$ author      &lt;chr&gt; "by James Patterson and Michael Ledwidge", "by Stieg Larss…
+$ rank        &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…
+$ date        &lt;date&gt; 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-1…
+$ publisher   &lt;chr&gt; "Little, Brown", "Knopf Doubleday", "Knopf Doubleday", "Kn…
+$ description &lt;chr&gt; "The New York detective Michael Bennett enlists the help o…</code></pre>
+</div>
+</div>
+<p>I’m going to clean the combined list to make it match the hardcover list.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>bestsellers_combined_clean <span class="ot">&lt;-</span> bestsellers_combined <span class="sc">|&gt;</span> <span class="co"># saving this chunk into a new object and starting with the data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date), <span class="co"># making a year column</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">week =</span> date, <span class="co"># making a new date column called "week" to match the first dataset</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">author =</span> <span class="fu">str_remove_all</span>(author, <span class="st">"by "</span>), <span class="co"># removing the "by " from the author column</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">rank =</span> <span class="fu">as.numeric</span>(rank)) <span class="sc">|&gt;</span> <span class="co"># changing the rank column from int to dbl</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(year,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>         week,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>         rank,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>         title,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>         author,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>         publisher,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>         description) <span class="sc">|&gt;</span> <span class="co"># putting the columns in the same order as the first dataset</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glimpse</span>() <span class="co"># glimpsing the data</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 11,040
+Columns: 7
+$ year        &lt;dbl&gt; 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011, 2011…
+$ week        &lt;date&gt; 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-13, 2011-02-1…
+$ rank        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…
+$ title       &lt;chr&gt; "TICK TOCK", "THE GIRL WITH THE DRAGON TATTOO", "THE GIRL …
+$ author      &lt;chr&gt; "James Patterson and Michael Ledwidge", "Stieg Larsson", "…
+$ publisher   &lt;chr&gt; "Little, Brown", "Knopf Doubleday", "Knopf Doubleday", "Kn…
+$ description &lt;chr&gt; "The New York detective Michael Bennett enlists the help o…</code></pre>
+</div>
+</div>
+</section>
+<section id="exporting-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="exporting-the-data">Exporting the data</h2>
+<p>Everything parsed correctly with this data, so I can go right to exporting it. I’ll export the data to my computer as an rds and as a csv</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>bestsellers_combined_clean <span class="sc">|&gt;</span> <span class="fu">write_rds</span>(<span class="st">"data-processed/bestsellers-combined.rds"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>bestsellers_combined_clean <span class="sc">|&gt;</span> <span class="fu">write_csv</span>(<span class="st">"data-processed/bestsellers-combined.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

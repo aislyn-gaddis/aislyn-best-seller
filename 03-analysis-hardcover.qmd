@@ -1,5 +1,5 @@
 ---
-title: "Hardcover Fiction Analysis"
+title: "Hardcover Analysis"
 ---
 
 ## Goals of the notebook

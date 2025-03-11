@@ -1,5 +1,5 @@
 ---
-title: "New York Times Best Sellers Analysis"
+title: "New York Times Best Sellers Data"
 ---
 
 I'm Aislyn Gaddis, a senior journalism student at the University of Texas at Austin.
@@ -7,5 +7,7 @@ I'm Aislyn Gaddis, a senior journalism student at the University of Texas at Aus
 This is just a simple Quarto website for my New York Times Best Sellers List data analysis. I first started this for my Reporting with Data class project in spring 2023, but I've been working on it off-and-on since then to improve and expand it. 
 
 The GitHub repository for this project is [here](https://github.com/aislyn-gaddis/aislyn-best-seller).
+
+I also recently implemented a GitHub Action to automatically scrape the lists each week and update the respective files.
 
 You can read the accompanying story [here](https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/). (Note: I analyzed the Combined Print and E-book Fiction List and did some more analysis on the Hardcover Fiction List after I wrote this story.)

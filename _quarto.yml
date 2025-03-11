@@ -2,20 +2,23 @@ project:
   type: website
 
 website:
-  title: "New York Times Best Sellers Analysis"
+  title: "NYT Best Sellers Data"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - 01-cleaning.qmd
-      - 02-analysis.qmd
-      - 03-analysis.qmd
+      - 01-cleaning-hardcover.qmd
+      - 02-cleaning-combined.qmd
+      - 03-analysis-hardcover.qmd
+      - 04-analysis-combined.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    toc-location: left
+    df-print: paged
     
 df-print: paged
 
