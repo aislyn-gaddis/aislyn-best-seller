@@ -16,10 +16,12 @@ if (file.exists(data_file)) {
   bestsellers <- tibble()  # If no file exists, start fresh
   last_date <- as.Date("2020-12-13")  # 🔧 Change this if your start date is different
 }
+print(last_date)
 
 # Calculate next week's date (ensures we're only scraping new data)
 current_date <- Sys.Date()
 next_sunday <- current_date + (8 - wday(current_date))
+print(next_sunday)
 
 # Check if data needs updating
 if (next_sunday > last_date) {
