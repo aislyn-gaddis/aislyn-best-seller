@@ -30,3 +30,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Publish Quarto Site
+        run: |
+          quarto publish gh-pages --no-prompt
+
+
