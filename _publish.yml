@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: b15a07b0-3e94-476e-b1f0-f55ba66a5256
+      url: 'https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers'
