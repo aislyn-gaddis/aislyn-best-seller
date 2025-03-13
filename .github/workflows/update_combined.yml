@@ -18,16 +18,16 @@ jobs:
       - name: Cache R Packages
         uses: actions/cache@v3
         with:
-          path: ~/.cache/R/
-          key: r-packages-${{ runner.os }}-${{ hashFiles('scripts/update_bestsellers_combined.R') }}
+          path: ~/.R/  # Cache location
+          key: r-packages-${{ runner.os }}-${{ hashFiles('.github/workflows/*.yml') }}
           restore-keys: |
             r-packages-${{ runner.os }}-
 
       - name: Install Dependencies
         run: |
           R -e 'install.packages(c("tidyverse", "rvest", "lubridate", "janitor", "readr"))'
-
-      - name: Debug: List Files
+          
+      - name: List Files
         run: ls -R
 
       - name: Run Combined Scraper
