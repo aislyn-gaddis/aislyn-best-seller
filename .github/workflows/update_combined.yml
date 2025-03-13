@@ -32,6 +32,6 @@ jobs:
 
       - name: Publish Quarto Site
         run: |
-          quarto publish --no-prompt
+          quarto publish gh-pages --no-prompt
 
 
