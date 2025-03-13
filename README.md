@@ -6,6 +6,15 @@ This project scrapes, cleans, and analyzes data from two **New York Times Best S
 - Hardcover Fiction List (1931-present)
 - Combined Print & E-Book Fiction List (2011-present)
 
+### Get the Data
+
+- **Hardcover Fiction** (1931-present)
+  - [RDS](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-hardcover.rds)
+  - [CSV](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-hardcover.csv)
+- **Combined Print & E-Book Fiction** (2011-present)
+  - [RDS](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-combined.rds)
+  - [CSV](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-combined.csv)
+
 ### Data Sources
 
 - **Hardcover Fiction**: Web scrape merged with historical data from the [Post 45 Collective](https://data.post45.org/posts/nyt_hardcover_fiction_bestsellers/)
@@ -15,7 +24,7 @@ This project scrapes, cleans, and analyzes data from two **New York Times Best S
 
 - **Automated Data Collection**: GitHub Actions automatically scrape the NYT Best Seller lists weekly
 - **Historical Analysis**: Explores trends across 90+ years of bestseller data
-- **Interactive Website**: Results viewable on a [Quarto website](https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers/)
+- **Interactive Website**: Results viewable on [GitHub pages](https://aislyn-gaddis.github.io/aislyn-best-seller/)
 
 ## Getting Started
 
