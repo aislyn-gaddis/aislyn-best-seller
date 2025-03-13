@@ -1,9 +1,9 @@
-# Load libraries
-library(readr)
-library(tidyverse)
-library(janitor)
-library(lubridate)
-library(rvest)
+# Load only the necessary libraries
+library(readr)     # For reading/writing RDS and CSV files
+library(dplyr)     # For bind_rows()
+library(stringr)   # For str_remove_all()
+library(lubridate) # For date manipulation (year(), wday())
+library(rvest)     # For web scraping (read_html(), html_nodes(), html_text())
 
 # Set file paths (🔧 Make sure these match your project structure)
 data_file <- "data-processed/bestsellers-hardcover.rds"
