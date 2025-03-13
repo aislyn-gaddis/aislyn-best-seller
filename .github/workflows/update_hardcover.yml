@@ -23,9 +23,15 @@ jobs:
           restore-keys: |
             r-packages-${{ runner.os }}-
 
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
       - name: Install Dependencies
         run: |
           R -e 'install.packages(c("tidyverse", "rvest", "lubridate", "janitor", "readr"), dependencies=TRUE)'
+          R -e 'warnings()'
           
       - name: List Files
         run: ls -R
