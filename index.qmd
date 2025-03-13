@@ -9,7 +9,7 @@ format:
 
 ## Project Overview
 
-This project provides a comprehensive analysis of the **New York Times Best Seller** lists, tracking trends and patterns in bestselling fiction books over time. The analysis focuses on two primary lists:
+This project provides data collection and analysis of the **New York Times Best Seller** lists, tracking trends and patterns in bestselling fiction books over time. The data contains two  lists:
 
 - **Hardcover Fiction** (1931-present)
 - **Combined Print & E-Book Fiction** (2011-present)
@@ -22,6 +22,15 @@ This project provides a comprehensive analysis of the **New York Times Best Sell
 - How do hardcover bestsellers compare to e-book inclusive listings?
 
 ## Data Collection
+
+### Get the Data
+
+- **Hardcover Fiction** (1931-present)
+  - [RDS](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-hardcover.rds)
+  - [CSV](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-hardcover.csv)
+- **Combined Print & E-Book Fiction** (2011-present)
+  - [RDS](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-combined.rds)
+  - [CSV](https://github.com/aislyn-gaddis/aislyn-best-seller/blob/main/data-processed/bestsellers-combined.csv)
 
 ### Data Sources
 

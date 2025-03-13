@@ -1,1 +1,1 @@
-Sitemap: https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers/sitemap.xml
+Sitemap: https://aislyn-gaddis.github.io/aislyn-best-seller/sitemap.xml
