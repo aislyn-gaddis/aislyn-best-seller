@@ -26,8 +26,8 @@ jobs:
       - name: Install Dependencies
         run: |
           R -e 'install.packages(c("tidyverse", "rvest", "lubridate", "janitor", "readr"))'
-      
-      - name: Debug: List Files
+          
+      - name: List Files
         run: ls -R
 
       - name: Run Hardcover Scraper
