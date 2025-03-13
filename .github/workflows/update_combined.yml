@@ -26,10 +26,14 @@ jobs:
       - name: Install System Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev \
+                                  libfontconfig1-dev libfreetype6-dev libpng-dev \
+                                  libtiff5-dev libjpeg-dev libcairo2-dev \
+                                  libudunits2-dev libgdal-dev
 
-      - name: Install Dependencies
+      - name: Install R Dependencies
         run: |
+          R -e 'install.packages("ragg", dependencies=TRUE)'
           R -e 'install.packages(c("tidyverse", "rvest", "lubridate", "janitor", "readr"), dependencies=TRUE)'
           R -e 'warnings()'
           
