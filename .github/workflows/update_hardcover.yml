@@ -8,42 +8,24 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
+    container: rocker/tidyverse:latest
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set Up R
-        uses: r-lib/actions/setup-r@v2
-
-      - name: Cache R Packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.R/  # Cache location
-          key: r-packages-${{ runner.os }}-${{ hashFiles('.github/workflows/*.yml') }}
-          restore-keys: |
-            r-packages-${{ runner.os }}-
-
-      - name: Install System Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-
-      - name: Install R Dependencies
-        run: |
-          R -e 'install.packages(c("readr", "dplyr", "stringr", "lubridate", "rvest"), dependencies=TRUE)'
-          R -e 'warnings()'
-          
-      - name: List Files
-        run: ls -R
-
       - name: Run Hardcover Scraper
         run: Rscript scripts/update_bestsellers_hardcover.R  # Ensure this script updates only new data
+
+      - name: Configure Git Safe Directory
+        run: git config --global --add safe.directory /__w/aislyn-best-seller/aislyn-best-seller
 
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add data-processed/bestsellers-hardcover.*
-          git commit -m "Updated hardcover bestsellers list"
-          git push
-        continue-on-error: true  # Avoid breaking if there's no new data
+          git add data-processed/bestsellers-combined.*
+          git commit -m "Updated combined bestsellers list" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
