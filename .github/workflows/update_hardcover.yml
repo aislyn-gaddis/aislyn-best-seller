@@ -24,8 +24,8 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
-          git add data-processed/bestsellers-combined.*
-          git commit -m "Updated combined bestsellers list" || echo "No changes to commit"
+          git add data-processed/bestsellers-hardcover.*
+          git commit -m "Updated hardcover bestsellers list" || echo "No changes to commit"
           git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
