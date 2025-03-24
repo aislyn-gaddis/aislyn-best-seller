@@ -52,16 +52,16 @@ This website contains four main analysis sections:
 3. [**Hardcover Fiction Analysis**](03-analysis-hardcover.qmd) - Findings and visualizations from the hardcover fiction dataset
 4. [**Combined List Analysis**](04-analysis-combined.qmd) - Findings and visualizations from the combined print and e-book dataset
 
-## Related Publications
+## Related Projects
 
-This research has been featured in:
+I've made two projects based on this data:
 
 - [What Books Top the New York Times Best Sellers List and Why?](https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/) - Article exploring key findings
 - [Data Dives: Investigating the NYT Bestseller Lists](https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/) - Podcast discussion of the research methodology and results
 
 ## About the Author
 
-This project is maintained by **Aislyn Gaddis**, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project at The University of Texas at Austin and has evolved into an ongoing project.
+This project is maintained by **Aislyn Gaddis**, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project in spring 2023 for Reporting with Data with Professor Christian McDonald at The University of Texas at Austin and has evolved into an ongoing project. In early 2025, I added GitHub Actions to automatically scrape the new list and update the data each week. 
 
 ## Repository
 
