@@ -39,13 +39,13 @@ To run this project:
 
 ## Project History
 
-This project began as a class assignment for "Reporting with Data" with Professor Christian McDonald at The University of Texas at Austin (Spring 2023) and has been continuously improved since.
+This project began as a class assignment for "Reporting with Data" with Professor Christian McDonald at The University of Texas at Austin (Spring 2023) and has been continuously improved since. In early 2025, I added GitHub Actions to automatically scrape the new list and update the data each week.
 
-## Media Coverage & Related Work
+## Related Work
 
 - [Original Class Story](https://aislyngaddis.com/what-books-top-the-new-york-times-best-sellers-list-and-why/)
 - [Data Dive Podcast](https://thedragaudio.com/data-dives-investigating-the-new-york-times-bestseller-lists/) (UT Media Innovation Group)
-- [Project Website](https://aislyn-gaddis.quarto.pub/new-york-time-best-sellers/)
+- [Project Website](https://aislyn-gaddis.github.io/aislyn-best-seller/)
 
 ## Repository
 
