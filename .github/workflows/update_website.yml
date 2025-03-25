@@ -22,7 +22,7 @@ jobs:
 
       - name: Install R Dependencies
         run: |
-          R -e 'install.packages("janitor", repos="http://cran.rstudio.com")'
+          R -e 'install.packages(c("janitor", "DT"), repos="http://cran.rstudio.com")'
 
       - name: Update website
         run: quarto publish gh-pages
