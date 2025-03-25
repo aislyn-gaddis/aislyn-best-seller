@@ -20,6 +20,10 @@ jobs:
       - name: Fetch All Branches
         run: git fetch --all
 
+      - name: Install R Dependencies
+        run: |
+          R -e 'install.packages("janitor", repos="http://cran.rstudio.com")'
+
       - name: Update website
         run: quarto publish gh-pages
 
