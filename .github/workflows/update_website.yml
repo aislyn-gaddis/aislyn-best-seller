@@ -1,4 +1,4 @@
-name: Update Combined Bestsellers
+name: Update Website
 
 on:
   schedule:
