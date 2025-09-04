@@ -40,10 +40,10 @@ if (next_sunday > last_date) {
   url <- sprintf("https://www.nytimes.com/books/best-sellers/%s/hardcover-fiction/", format(next_sunday, "%Y/%m/%d"))
   page <- read_html(url)
   
-  titles <- page %>% html_nodes(".css-2jegzb") %>% html_text()
-  authors <- page %>% html_nodes(".css-1aaqvca") %>% html_text()
-  publishers <- page %>% html_nodes(".css-1w6oav3") %>% html_text()
-  descriptions <- page %>% html_nodes(".css-17af87k") %>% html_text()
+  titles <- page %>% html_nodes(".css-5pe77f") %>% html_text()
+  authors <- page %>% html_nodes(".css-hjukut") %>% html_text()
+  publishers <- page %>% html_nodes(".css-heg334") %>% html_text()
+  descriptions <- page %>% html_nodes(".css-14lubdp") %>% html_text()
   
   if (length(titles) > 0) {  # Only save if scrape was successful
     new_data <- tibble(
