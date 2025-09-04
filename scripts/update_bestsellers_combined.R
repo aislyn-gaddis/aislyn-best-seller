@@ -34,7 +34,43 @@ if (day_of_week == 1) {
 }
 print(next_sunday) # for debugging if next_sunday value is correct
 
-# Check if data needs updating
+# extra loop to see if there are any missing weeks that didn't get scraped for whatever reason
+missing_weeks <- seq(last_date + 7, next_sunday - 7, by = "7 days")
+
+for (week_date in missing_weeks) {
+  url <- sprintf(
+    "https://www.nytimes.com/books/best-sellers/%s/combined-print-and-e-book-fiction/",
+    format(week_date, "%Y/%m/%d")
+  )
+  page <- read_html(url)
+
+  titles <- page %>% html_nodes(".css-5pe77f") %>% html_text()
+  authors <- page %>% html_nodes(".css-hjukut") %>% html_text()
+  publishers <- page %>% html_nodes(".css-heg334") %>% html_text()
+  descriptions <- page %>% html_nodes(".css-14lubdp") %>% html_text()
+
+  if (length(titles) > 0) {
+    new_data <- tibble(
+      year = year(week_date),
+      week = week_date,
+      rank = seq_along(titles),
+      title = titles,
+      author = str_remove_all(authors, "by "),
+      publisher = publishers,
+      description = descriptions
+    )
+    bestsellers <- bind_rows(bestsellers, new_data)
+    print(paste("Filled missing week:", week_date))
+  } else {
+    print(paste("No data found for missing week:", week_date))
+  }
+}
+
+# Save after backfill
+write_rds(bestsellers, data_file)
+write_csv(bestsellers, "data-processed/bestsellers-combined.csv")
+
+# Check if the data needs updating
 if (next_sunday > last_date) {
   url <- sprintf("https://www.nytimes.com/books/best-sellers/%s/combined-print-and-e-book-fiction/", format(next_sunday, "%Y/%m/%d"))
   page <- read_html(url)
