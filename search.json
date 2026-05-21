@@ -1,33 +1,5 @@
 [
   {
-    "objectID": "02-cleaning-combined.html",
-    "href": "02-cleaning-combined.html",
-    "title": "Combined Print and E-Book Web Scrape",
-    "section": "",
-    "text": "In this notebook, I’m going to\n\nweb scrape the NYT Combined Print and E-Book Fiction List\nclean the data\nsave the data\n\nI’ll load any libraries I might need.\n\nlibrary(readr)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ purrr     1.2.2\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(janitor)\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(lubridate)\nlibrary(rvest)\n\n\nAttaching package: 'rvest'\n\nThe following object is masked from 'package:readr':\n\n    guess_encoding"
-  },
-  {
-    "objectID": "02-cleaning-combined.html#goals-of-the-notebook",
-    "href": "02-cleaning-combined.html#goals-of-the-notebook",
-    "title": "Combined Print and E-Book Web Scrape",
-    "section": "",
-    "text": "In this notebook, I’m going to\n\nweb scrape the NYT Combined Print and E-Book Fiction List\nclean the data\nsave the data\n\nI’ll load any libraries I might need.\n\nlibrary(readr)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ purrr     1.2.2\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(janitor)\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(lubridate)\nlibrary(rvest)\n\n\nAttaching package: 'rvest'\n\nThe following object is masked from 'package:readr':\n\n    guess_encoding"
-  },
-  {
-    "objectID": "02-cleaning-combined.html#combined-print-and-e-book-web-scrape",
-    "href": "02-cleaning-combined.html#combined-print-and-e-book-web-scrape",
-    "title": "Combined Print and E-Book Web Scrape",
-    "section": "Combined Print and E-book Web Scrape",
-    "text": "Combined Print and E-book Web Scrape\nNow I’ll do a similar web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. It will take quite a while to run. I also recommend commenting it after you finish running it.\n\n# start_date &lt;- as.Date(\"2011-02-13\")\n# current_date = Sys.Date()\n# day_of_week = wday(current_date)\n# \n# # note: the list for the following week is published on Wednesdays at 7pm EST\n# \n# if (day_of_week == 1) {\n#   end_date = current_date + 7\n# } else if (day_of_week &gt;= 2 & day_of_week &lt;= 4) {\n#   days_until_sunday = 8 - day_of_week\n#   end_date = current_date + days_until_sunday # end_date is equal to the sunday after the current_date\n# } else if (day_of_week &gt;= 5 & day_of_week &lt;= 7) {\n#   days_until_sunday = 8 - day_of_week\n#   end_date = current_date + days_until_sunday + 7 # end_date is equal to 2 sundays after the current_date\n# }\n# \n# dates &lt;- seq(start_date, end_date, by = \"week\")\n# \n# # Create output directory if it doesn't exist\n# output_dir &lt;- \"data-raw/bestsellers-combined-weeks\"\n# if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)\n# \n# # Function to scrape and save data for each date\n# map(dates, function(date) {\n#   url &lt;- sprintf(\"https://www.nytimes.com/books/best-sellers/%s/combined-print-and-e-book-fiction/\", format(date, \"%Y/%m/%d\"))\n#   page &lt;- read_html(url)\n#   \n#   titles &lt;- page %&gt;% html_nodes(\".css-2jegzb\") %&gt;% html_text()\n#   authors &lt;- page %&gt;% html_nodes(\".css-1aaqvca\") %&gt;% html_text()\n#   publishers &lt;- page %&gt;% html_nodes(\".css-1w6oav3\") %&gt;% html_text()\n#   descriptions &lt;- page %&gt;% html_nodes(\".css-17af87k\") %&gt;% html_text()\n#   \n#   ranks &lt;- seq_along(titles)\n# \n#   df = data.frame(title = titles, author = authors, rank = ranks, date = date, publisher = publishers, description = descriptions)\n#   \n#   # Save each week's data as an RDS file\n#   file_path &lt;- file.path(output_dir, paste0(\"bestsellers-combined-\", date, \".rds\"))\n#   write_rds(df, file_path)\n#   \n#   #print(date) # for status\n# })\n\nNow I’ll combine all the weeks files into one file.\n\nfile_list &lt;- list.files(\"data-raw/bestsellers-combined-weeks\", full.names = TRUE)\ndfs &lt;- map_dfr(file_list, read_rds)\nwrite_rds(dfs, \"data-raw/bestsellers-combined-all-weeks.rds\")\n\nI’ll save the new file into a new object and glimpse it.\n\nbestsellers_combined &lt;- read_rds(\"data-raw/bestsellers-combined-all-weeks.rds\") # creating a new object with a file \n\nbestsellers_combined |&gt; glimpse() # glimpsing the data\n\nRows: 7,125\nColumns: 6\n$ title       &lt;chr&gt; \"NYPD RED 4\", \"SPIDER GAME\", \"THE BANDS OF MOURNING\", \"THE…\n$ author      &lt;chr&gt; \"by James Patterson and Marshall Karp\", \"by Christine Feeh…\n$ rank        &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…\n$ date        &lt;date&gt; 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-1…\n$ publisher   &lt;chr&gt; \"Little, Brown\", \"Jove\", \"Tor/Tom Doherty\", \"Grand Central…\n$ description &lt;chr&gt; \"Detective Zach Gordon and his partner, members of an elit…\n\n\nI’m going to clean the combined list to make it match the hardcover list.\n\nbestsellers_combined_clean &lt;- bestsellers_combined |&gt; # saving this chunk into a new object and starting with the data\n  mutate(year = year(date), # making a year column\n         week = date, # making a new date column called \"week\" to match the first dataset\n         author = str_remove_all(author, \"by \"), # removing the \"by \" from the author column\n         rank = as.numeric(rank)) |&gt; # changing the rank column from int to dbl\n  select(year,\n         week,\n         rank,\n         title,\n         author,\n         publisher,\n         description) |&gt; # putting the columns in the same order as the first dataset\n  glimpse() # glimpsing the data\n\nRows: 7,125\nColumns: 7\n$ year        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016…\n$ week        &lt;date&gt; 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-1…\n$ rank        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…\n$ title       &lt;chr&gt; \"NYPD RED 4\", \"SPIDER GAME\", \"THE BANDS OF MOURNING\", \"THE…\n$ author      &lt;chr&gt; \"James Patterson and Marshall Karp\", \"Christine Feehan\", \"…\n$ publisher   &lt;chr&gt; \"Little, Brown\", \"Jove\", \"Tor/Tom Doherty\", \"Grand Central…\n$ description &lt;chr&gt; \"Detective Zach Gordon and his partner, members of an elit…"
-  },
-  {
-    "objectID": "02-cleaning-combined.html#exporting-the-data",
-    "href": "02-cleaning-combined.html#exporting-the-data",
-    "title": "Combined Print and E-Book Web Scrape",
-    "section": "Exporting the data",
-    "text": "Exporting the data\nEverything parsed correctly with this data, so I can go right to exporting it. I’ll export the data to my computer as an rds and as a csv\n\nbestsellers_combined_clean |&gt; write_rds(\"data-processed/bestsellers-combined.rds\")\nbestsellers_combined_clean |&gt; write_csv(\"data-processed/bestsellers-combined.csv\")"
-  },
-  {
     "objectID": "04-analysis-combined.html",
     "href": "04-analysis-combined.html",
     "title": "Combined Print and E-Book Analysis",
@@ -53,7 +25,7 @@
     "href": "04-analysis-combined.html#import",
     "title": "Combined Print and E-Book Analysis",
     "section": "Import",
-    "text": "Import\nI’ll import the data into the notebook by saving the file into a new object\n\nbestsellers &lt;- read_rds(\"data-processed/bestsellers-combined.rds\") # saving the data into a new object\n\nglimpse(bestsellers) # glimpsing the data\n\nRows: 7,140\nColumns: 7\n$ year        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016…\n$ week        &lt;date&gt; 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-1…\n$ rank        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…\n$ title       &lt;chr&gt; \"NYPD RED 4\", \"SPIDER GAME\", \"THE BANDS OF MOURNING\", \"THE…\n$ author      &lt;chr&gt; \"James Patterson and Marshall Karp\", \"Christine Feehan\", \"…\n$ publisher   &lt;chr&gt; \"Little, Brown\", \"Jove\", \"Tor/Tom Doherty\", \"Grand Central…\n$ description &lt;chr&gt; \"Detective Zach Gordon and his partner, members of an elit…"
+    "text": "Import\nI’ll import the data into the notebook by saving the file into a new object\n\nbestsellers &lt;- read_rds(\"data-processed/bestsellers-combined.rds\") # saving the data into a new object\n\nglimpse(bestsellers) # glimpsing the data\n\nRows: 7,125\nColumns: 7\n$ year        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016…\n$ week        &lt;date&gt; 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-1…\n$ rank        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…\n$ title       &lt;chr&gt; \"NYPD RED 4\", \"SPIDER GAME\", \"THE BANDS OF MOURNING\", \"THE…\n$ author      &lt;chr&gt; \"James Patterson and Marshall Karp\", \"Christine Feehan\", \"…\n$ publisher   &lt;chr&gt; \"Little, Brown\", \"Jove\", \"Tor/Tom Doherty\", \"Grand Central…\n$ description &lt;chr&gt; \"Detective Zach Gordon and his partner, members of an elit…"
   },
   {
     "objectID": "04-analysis-combined.html#making-a-searchable-table",
@@ -131,6 +103,55 @@
     "title": "Combined Print and E-Book Analysis",
     "section": "What author has had the most No. 1 books in the last 2 years? 5 years? 10 years?",
     "text": "What author has had the most No. 1 books in the last 2 years? 5 years? 10 years?\nI’ll start with 2 years.\nJohn Sandford takes first with 5 No. 1 books.\n\nbestsellers |&gt; # start with the data\n  filter(rank == 1, \n         year &gt;2021) |&gt; # only include rows with a rank of 1 and a year over 2021\n  distinct(author, title) |&gt; # only include unique author/title combinations\n  group_by(author) |&gt; # group by author\n  summarize(titles = n()) |&gt; # count titles per author\n  arrange(desc(titles)) |&gt; # arrange in descending order by titles\n  filter(titles &gt; 2) # only include rows with titles above 2\n\n\n  \n\n\n\nI’ll find which authors have had the most No. 1 books in the last 5 years.\nDavid Baldacci is first with 11 No. 1 books.\n\nbestsellers |&gt; # start with the data\n  filter(rank == 1, \n         year &gt; 2018) |&gt; # only include rows with a rank of 1 and a year over 2018\n  distinct(author, title) |&gt; # only include unique author/title combinations\n  group_by(author) |&gt; # group by author\n  summarize(titles = n()) |&gt; # count titles per author\n  arrange(desc(titles)) |&gt; # arrange in descending order by titles\n  filter(titles &gt; 4) # only include rows with titles above 4\n\n\n  \n\n\n\nNow, I’ll look at the last 10 years.\nNora Roberts is first with 17 and David Baldacci is second with 16.\n\nbestsellers |&gt; # start with the data\n  filter(rank == 1,\n         year &gt; 2013) |&gt; # only include rows with a rank of 1 and a year over 2013\n  distinct(author, title) |&gt; # only include unique author/title combinations\n  group_by(author) |&gt; # group by author\n  summarize(titles = n()) |&gt; # count titles per author\n  arrange(desc(titles)) |&gt; # arrange in descending order by titles\n  filter(titles &gt; 8) # only include rows with titles above 8"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "New York Times Best Seller Analysis",
+    "section": "",
+    "text": "This project provides data collection and analysis of the New York Times Best Seller lists, tracking trends and patterns in bestselling fiction books over time. The data contains two lists:\n\nHardcover Fiction (1931-present)\nCombined Print & E-Book Fiction (2011-present)\n\n\n\n\nHow has the NYT bestseller list evolved over time?\nWhich authors and titles have dominated the lists?\nWhat patterns can we observe in bestseller performance?\nHow do hardcover bestsellers compare to e-book inclusive listings?"
+  },
+  {
+    "objectID": "index.html#project-overview",
+    "href": "index.html#project-overview",
+    "title": "New York Times Best Seller Analysis",
+    "section": "",
+    "text": "This project provides data collection and analysis of the New York Times Best Seller lists, tracking trends and patterns in bestselling fiction books over time. The data contains two lists:\n\nHardcover Fiction (1931-present)\nCombined Print & E-Book Fiction (2011-present)\n\n\n\n\nHow has the NYT bestseller list evolved over time?\nWhich authors and titles have dominated the lists?\nWhat patterns can we observe in bestseller performance?\nHow do hardcover bestsellers compare to e-book inclusive listings?"
+  },
+  {
+    "objectID": "index.html#data-collection",
+    "href": "index.html#data-collection",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Data Collection",
+    "text": "Data Collection\n\nGet the Data\n\nHardcover Fiction (1931-present)\n\nRDS\nCSV\n\nCombined Print & E-Book Fiction (2011-present)\n\nRDS\nCSV\n\n\n\n\nData Sources\nThis project combines data from multiple sources:\n\nWeb Scraping: Current bestseller data collected directly from the New York Times website\nHistorical Archives: Hardcover fiction data (1931-2010) from the Post 45 Collective\n\n\n\nAutomated Updates\nThe dataset is automatically refreshed weekly through GitHub Actions workflows, ensuring the analysis remains current with the latest bestseller information."
+  },
+  {
+    "objectID": "index.html#project-navigation",
+    "href": "index.html#project-navigation",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Project Navigation",
+    "text": "Project Navigation\nThis website contains four main analysis sections:\n\nHardcover Fiction Data Cleaning - Methodology for preparing the hardcover fiction dataset\nCombined List Data Cleaning - Methodology for preparing the combined print and e-book dataset\nHardcover Fiction Analysis - Findings and visualizations from the hardcover fiction dataset\nCombined List Analysis - Findings and visualizations from the combined print and e-book dataset"
+  },
+  {
+    "objectID": "index.html#related-projects",
+    "href": "index.html#related-projects",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Related Projects",
+    "text": "Related Projects\nI’ve made two projects based on this data:\n\nWhat Books Top the New York Times Best Sellers List and Why? - Article exploring key findings\nData Dives: Investigating the NYT Bestseller Lists - Podcast discussion of the research methodology and results"
+  },
+  {
+    "objectID": "index.html#about-the-author",
+    "href": "index.html#about-the-author",
+    "title": "New York Times Best Seller Analysis",
+    "section": "About the Author",
+    "text": "About the Author\nThis project is maintained by Aislyn Gaddis, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project in spring 2023 for Reporting with Data with Professor Christian McDonald at The University of Texas at Austin and has evolved into an ongoing project. In early 2025, I added GitHub Actions to automatically scrape the new list and update the data each week."
+  },
+  {
+    "objectID": "index.html#repository",
+    "href": "index.html#repository",
+    "title": "New York Times Best Seller Analysis",
+    "section": "Repository",
+    "text": "Repository\nThe complete code and data for this project are available on GitHub."
   },
   {
     "objectID": "01-cleaning-hardcover.html",
@@ -308,52 +329,31 @@
     "text": "What author has had the most No. 1 books in the last 2 years? 5 years? 10 years?\nI’ll start with 2 years.\nJohn Grisham has the most with 5 No. 1 books.\n\nbestsellers |&gt; # start with the data\n  filter(rank == 1, \n         year &gt;2021) |&gt; # only include rows with a rank of 1 and a year over 2021\n  distinct(author, title) |&gt; # only include unique author/title combinations\n  group_by(author) |&gt; # group by author\n  summarize(titles = n()) |&gt; # count titles per author\n  arrange(desc(titles)) |&gt; # arrange in descending order by titles\n  filter(titles &gt; 1) # only include titles above 1\n\n\n  \n\n\n\nI’ll find which authors have had the most No. 1 books in the last 5 years.\nJohn Grisham is in first with 10 No.1 titles in the last 5 years. David Baldacci is in second with 8.\n\nbestsellers |&gt; # start with the data\n  filter(rank == 1, \n         year &gt; 2018) |&gt; # only include rows with a rank of 1 and a year over 2018\n  distinct(author, title) |&gt; # only include unique author/title combinations\n  group_by(author) |&gt; # group by author\n  summarize(titles = n()) |&gt; # count titles per author\n  arrange(desc(titles)) |&gt; # arrange in descending order by titles\n  filter(titles &gt; 2) # only include titles above 2\n\n\n  \n\n\n\nNow, I’ll look at the last 10 years.\nThe results are fairly similar to the last five years. John Grisham is in first with 16 No. 1 titles in the last 10 years. David Baldacci is in second with 14. Stephen King is in third with 13.\n\nbestsellers |&gt; # start with the data\n  filter(rank == 1,\n         year &gt; 2013) |&gt; # only include rows with a rank of 1 and a year over 2013\n  distinct(author, title) |&gt; # only include unique author/title combinations\n  group_by(author) |&gt; # group by author\n  summarize(titles = n()) |&gt; # count titles per author\n  arrange(desc(titles)) |&gt; # arrange in descending order by titles\n  filter(titles &gt; 7) # only include titles above 7"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "New York Times Best Seller Analysis",
+    "objectID": "02-cleaning-combined.html",
+    "href": "02-cleaning-combined.html",
+    "title": "Combined Print and E-Book Web Scrape",
     "section": "",
-    "text": "This project provides data collection and analysis of the New York Times Best Seller lists, tracking trends and patterns in bestselling fiction books over time. The data contains two lists:\n\nHardcover Fiction (1931-present)\nCombined Print & E-Book Fiction (2011-present)\n\n\n\n\nHow has the NYT bestseller list evolved over time?\nWhich authors and titles have dominated the lists?\nWhat patterns can we observe in bestseller performance?\nHow do hardcover bestsellers compare to e-book inclusive listings?"
+    "text": "In this notebook, I’m going to\n\nweb scrape the NYT Combined Print and E-Book Fiction List\nclean the data\nsave the data\n\nI’ll load any libraries I might need.\n\nlibrary(readr)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ purrr     1.2.2\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(janitor)\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(lubridate)\nlibrary(rvest)\n\n\nAttaching package: 'rvest'\n\nThe following object is masked from 'package:readr':\n\n    guess_encoding"
   },
   {
-    "objectID": "index.html#project-overview",
-    "href": "index.html#project-overview",
-    "title": "New York Times Best Seller Analysis",
+    "objectID": "02-cleaning-combined.html#goals-of-the-notebook",
+    "href": "02-cleaning-combined.html#goals-of-the-notebook",
+    "title": "Combined Print and E-Book Web Scrape",
     "section": "",
-    "text": "This project provides data collection and analysis of the New York Times Best Seller lists, tracking trends and patterns in bestselling fiction books over time. The data contains two lists:\n\nHardcover Fiction (1931-present)\nCombined Print & E-Book Fiction (2011-present)\n\n\n\n\nHow has the NYT bestseller list evolved over time?\nWhich authors and titles have dominated the lists?\nWhat patterns can we observe in bestseller performance?\nHow do hardcover bestsellers compare to e-book inclusive listings?"
+    "text": "In this notebook, I’m going to\n\nweb scrape the NYT Combined Print and E-Book Fiction List\nclean the data\nsave the data\n\nI’ll load any libraries I might need.\n\nlibrary(readr)\nlibrary(tidyverse)\n\n── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──\n✔ dplyr     1.2.1     ✔ purrr     1.2.2\n✔ forcats   1.0.1     ✔ stringr   1.6.0\n✔ ggplot2   4.0.3     ✔ tibble    3.3.1\n✔ lubridate 1.9.5     ✔ tidyr     1.3.2\n── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──\n✖ dplyr::filter() masks stats::filter()\n✖ dplyr::lag()    masks stats::lag()\nℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors\n\nlibrary(janitor)\n\n\nAttaching package: 'janitor'\n\nThe following objects are masked from 'package:stats':\n\n    chisq.test, fisher.test\n\nlibrary(lubridate)\nlibrary(rvest)\n\n\nAttaching package: 'rvest'\n\nThe following object is masked from 'package:readr':\n\n    guess_encoding"
   },
   {
-    "objectID": "index.html#data-collection",
-    "href": "index.html#data-collection",
-    "title": "New York Times Best Seller Analysis",
-    "section": "Data Collection",
-    "text": "Data Collection\n\nGet the Data\n\nHardcover Fiction (1931-present)\n\nRDS\nCSV\n\nCombined Print & E-Book Fiction (2011-present)\n\nRDS\nCSV\n\n\n\n\nData Sources\nThis project combines data from multiple sources:\n\nWeb Scraping: Current bestseller data collected directly from the New York Times website\nHistorical Archives: Hardcover fiction data (1931-2010) from the Post 45 Collective\n\n\n\nAutomated Updates\nThe dataset is automatically refreshed weekly through GitHub Actions workflows, ensuring the analysis remains current with the latest bestseller information."
+    "objectID": "02-cleaning-combined.html#combined-print-and-e-book-web-scrape",
+    "href": "02-cleaning-combined.html#combined-print-and-e-book-web-scrape",
+    "title": "Combined Print and E-Book Web Scrape",
+    "section": "Combined Print and E-book Web Scrape",
+    "text": "Combined Print and E-book Web Scrape\nNow I’ll do a similar web scrape to get the combined print and ebook list. This is going through over a decade of data, so you may have to try running it a few times before it successfully completes. It will take quite a while to run. I also recommend commenting it after you finish running it.\n\n# start_date &lt;- as.Date(\"2011-02-13\")\n# current_date = Sys.Date()\n# day_of_week = wday(current_date)\n# \n# # note: the list for the following week is published on Wednesdays at 7pm EST\n# \n# if (day_of_week == 1) {\n#   end_date = current_date + 7\n# } else if (day_of_week &gt;= 2 & day_of_week &lt;= 4) {\n#   days_until_sunday = 8 - day_of_week\n#   end_date = current_date + days_until_sunday # end_date is equal to the sunday after the current_date\n# } else if (day_of_week &gt;= 5 & day_of_week &lt;= 7) {\n#   days_until_sunday = 8 - day_of_week\n#   end_date = current_date + days_until_sunday + 7 # end_date is equal to 2 sundays after the current_date\n# }\n# \n# dates &lt;- seq(start_date, end_date, by = \"week\")\n# \n# # Create output directory if it doesn't exist\n# output_dir &lt;- \"data-raw/bestsellers-combined-weeks\"\n# if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)\n# \n# # Function to scrape and save data for each date\n# map(dates, function(date) {\n#   url &lt;- sprintf(\"https://www.nytimes.com/books/best-sellers/%s/combined-print-and-e-book-fiction/\", format(date, \"%Y/%m/%d\"))\n#   page &lt;- read_html(url)\n#   \n#   titles &lt;- page %&gt;% html_nodes(\".css-2jegzb\") %&gt;% html_text()\n#   authors &lt;- page %&gt;% html_nodes(\".css-1aaqvca\") %&gt;% html_text()\n#   publishers &lt;- page %&gt;% html_nodes(\".css-1w6oav3\") %&gt;% html_text()\n#   descriptions &lt;- page %&gt;% html_nodes(\".css-17af87k\") %&gt;% html_text()\n#   \n#   ranks &lt;- seq_along(titles)\n# \n#   df = data.frame(title = titles, author = authors, rank = ranks, date = date, publisher = publishers, description = descriptions)\n#   \n#   # Save each week's data as an RDS file\n#   file_path &lt;- file.path(output_dir, paste0(\"bestsellers-combined-\", date, \".rds\"))\n#   write_rds(df, file_path)\n#   \n#   #print(date) # for status\n# })\n\nNow I’ll combine all the weeks files into one file.\n\nfile_list &lt;- list.files(\"data-raw/bestsellers-combined-weeks\", full.names = TRUE)\ndfs &lt;- map_dfr(file_list, read_rds)\nwrite_rds(dfs, \"data-raw/bestsellers-combined-all-weeks.rds\")\n\nI’ll save the new file into a new object and glimpse it.\n\nbestsellers_combined &lt;- read_rds(\"data-raw/bestsellers-combined-all-weeks.rds\") # creating a new object with a file \n\nbestsellers_combined |&gt; glimpse() # glimpsing the data\n\nRows: 7,125\nColumns: 6\n$ title       &lt;chr&gt; \"NYPD RED 4\", \"SPIDER GAME\", \"THE BANDS OF MOURNING\", \"THE…\n$ author      &lt;chr&gt; \"by James Patterson and Marshall Karp\", \"by Christine Feeh…\n$ rank        &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…\n$ date        &lt;date&gt; 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-1…\n$ publisher   &lt;chr&gt; \"Little, Brown\", \"Jove\", \"Tor/Tom Doherty\", \"Grand Central…\n$ description &lt;chr&gt; \"Detective Zach Gordon and his partner, members of an elit…\n\n\nI’m going to clean the combined list to make it match the hardcover list.\n\nbestsellers_combined_clean &lt;- bestsellers_combined |&gt; # saving this chunk into a new object and starting with the data\n  mutate(year = year(date), # making a year column\n         week = date, # making a new date column called \"week\" to match the first dataset\n         author = str_remove_all(author, \"by \"), # removing the \"by \" from the author column\n         rank = as.numeric(rank)) |&gt; # changing the rank column from int to dbl\n  select(year,\n         week,\n         rank,\n         title,\n         author,\n         publisher,\n         description) |&gt; # putting the columns in the same order as the first dataset\n  glimpse() # glimpsing the data\n\nRows: 7,125\nColumns: 7\n$ year        &lt;dbl&gt; 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016, 2016…\n$ week        &lt;date&gt; 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-14, 2016-02-1…\n$ rank        &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 2, 3…\n$ title       &lt;chr&gt; \"NYPD RED 4\", \"SPIDER GAME\", \"THE BANDS OF MOURNING\", \"THE…\n$ author      &lt;chr&gt; \"James Patterson and Marshall Karp\", \"Christine Feehan\", \"…\n$ publisher   &lt;chr&gt; \"Little, Brown\", \"Jove\", \"Tor/Tom Doherty\", \"Grand Central…\n$ description &lt;chr&gt; \"Detective Zach Gordon and his partner, members of an elit…"
   },
   {
-    "objectID": "index.html#project-navigation",
-    "href": "index.html#project-navigation",
-    "title": "New York Times Best Seller Analysis",
-    "section": "Project Navigation",
-    "text": "Project Navigation\nThis website contains four main analysis sections:\n\nHardcover Fiction Data Cleaning - Methodology for preparing the hardcover fiction dataset\nCombined List Data Cleaning - Methodology for preparing the combined print and e-book dataset\nHardcover Fiction Analysis - Findings and visualizations from the hardcover fiction dataset\nCombined List Analysis - Findings and visualizations from the combined print and e-book dataset"
-  },
-  {
-    "objectID": "index.html#related-projects",
-    "href": "index.html#related-projects",
-    "title": "New York Times Best Seller Analysis",
-    "section": "Related Projects",
-    "text": "Related Projects\nI’ve made two projects based on this data:\n\nWhat Books Top the New York Times Best Sellers List and Why? - Article exploring key findings\nData Dives: Investigating the NYT Bestseller Lists - Podcast discussion of the research methodology and results"
-  },
-  {
-    "objectID": "index.html#about-the-author",
-    "href": "index.html#about-the-author",
-    "title": "New York Times Best Seller Analysis",
-    "section": "About the Author",
-    "text": "About the Author\nThis project is maintained by Aislyn Gaddis, a senior journalism major at UT Austin interested in data, newsroom innovation and multimedia journalism. The work began as a class project in spring 2023 for Reporting with Data with Professor Christian McDonald at The University of Texas at Austin and has evolved into an ongoing project. In early 2025, I added GitHub Actions to automatically scrape the new list and update the data each week."
-  },
-  {
-    "objectID": "index.html#repository",
-    "href": "index.html#repository",
-    "title": "New York Times Best Seller Analysis",
-    "section": "Repository",
-    "text": "Repository\nThe complete code and data for this project are available on GitHub."
+    "objectID": "02-cleaning-combined.html#exporting-the-data",
+    "href": "02-cleaning-combined.html#exporting-the-data",
+    "title": "Combined Print and E-Book Web Scrape",
+    "section": "Exporting the data",
+    "text": "Exporting the data\nEverything parsed correctly with this data, so I can go right to exporting it. I’ll export the data to my computer as an rds and as a csv\n\nbestsellers_combined_clean |&gt; write_rds(\"data-processed/bestsellers-combined.rds\")\nbestsellers_combined_clean |&gt; write_csv(\"data-processed/bestsellers-combined.csv\")"
   }
 ]
